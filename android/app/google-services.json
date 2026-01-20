@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "674199425144",
+    "project_id": "magnum-posts",
+    "storage_bucket": "magnum-posts.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:674199425144:android:1988a4a189dcc765059d8d",
+        "android_client_info": {
+          "package_name": "com.example.magnum_posts"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAwtK_kNhp_o40ingHR8QE3S7lFNVBehgo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
