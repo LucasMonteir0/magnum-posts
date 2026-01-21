@@ -54,7 +54,7 @@ class _SignInViewState extends State<SignInView> {
         listener: (context, state) {
           if (state is SuccessState) {
             ToastHelper.showSuccess(context, "Login realizado com sucesso");
-            Modular.to.navigate(Routes.posts + Routes.root);
+            Modular.to.pushNamed(Routes.posts + Routes.root);
           } else if (state is ErrorState) {
             ToastHelper.showError(context, state.error.message);
           }
