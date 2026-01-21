@@ -1,10 +1,10 @@
 import "package:dio/dio.dart";
 import "package:firebase_core/firebase_core.dart";
 
-import "../../../commons/core/domain/entities/api/api_error.dart";
-import "../../../commons/core/domain/entities/base_error.dart";
-import "../../../commons/utils/errors/errors.dart";
-import "../../../commons/utils/errors/handle_errors.dart";
+import "../../core/domain/entities/api/api_error.dart";
+import "../../core/domain/entities/base_error.dart";
+import "errors.dart";
+import "handle_errors.dart";
 
 BaseError handleFirebaseError(
   Object error, {

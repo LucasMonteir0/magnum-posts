@@ -1,8 +1,8 @@
 import "package:dio/dio.dart";
 import "package:firebase_core/firebase_core.dart";
 import "package:flutter_test/flutter_test.dart";
-import "package:magnum_posts/modules/auth/utils/errors/handle_firebase_errors.dart";
 import "package:magnum_posts/modules/commons/utils/errors/errors.dart";
+import "package:magnum_posts/modules/commons/utils/errors/handle_firebase_errors.dart";
 
 void main() {
   group("handleFirebaseError", () {
