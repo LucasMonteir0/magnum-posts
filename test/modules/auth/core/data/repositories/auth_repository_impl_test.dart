@@ -24,16 +24,13 @@ void main() {
       test(
         "should delegate to dataSource.signIn() and return success result",
         () async {
-          // Arrange
           final tSuccessResult = ResultWrapper.success(true);
           when(
             () => mockDataSource.signIn(any(), any()),
           ).thenAnswer((_) async => tSuccessResult);
 
-          // Act
           final result = await repository.signIn(tEmail, tPassword);
 
-          // Assert
           expect(result.isSuccess, true);
           expect(result.data, true);
           verify(() => mockDataSource.signIn(tEmail, tPassword)).called(1);
@@ -44,7 +41,6 @@ void main() {
       test(
         "should delegate to dataSource.signIn() and return error result",
         () async {
-          // Arrange
           final tErrorResult = ResultWrapper<bool>.error(
             BadRequestError(message: "Invalid credentials"),
           );
@@ -52,10 +48,8 @@ void main() {
             () => mockDataSource.signIn(any(), any()),
           ).thenAnswer((_) async => tErrorResult);
 
-          // Act
           final result = await repository.signIn(tEmail, tPassword);
 
-          // Assert
           expect(result.isSuccess, false);
           expect(result.error, isA<BadRequestError>());
           verify(() => mockDataSource.signIn(tEmail, tPassword)).called(1);
@@ -64,16 +58,13 @@ void main() {
       );
 
       test("should pass correct email and password to dataSource", () async {
-        // Arrange
         final tSuccessResult = ResultWrapper.success(true);
         when(
           () => mockDataSource.signIn(any(), any()),
         ).thenAnswer((_) async => tSuccessResult);
 
-        // Act
         await repository.signIn(tEmail, tPassword);
 
-        // Assert
         verify(() => mockDataSource.signIn(tEmail, tPassword)).called(1);
       });
     });

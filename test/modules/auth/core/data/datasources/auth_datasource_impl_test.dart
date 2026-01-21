@@ -27,7 +27,6 @@ void main() {
       test(
         "should return ResultWrapper.success(true) when signIn is successful and user is not null",
         () async {
-          // Arrange
           final mockUserCredential = MockUserCredential();
           final mockUser = MockUser();
 
@@ -40,10 +39,8 @@ void main() {
 
           when(() => mockUserCredential.user).thenReturn(mockUser);
 
-          // Act
           final result = await dataSource.signIn(tEmail, tPassword);
 
-          // Assert
           expect(result.isSuccess, true);
           expect(result.data, true);
           verify(
@@ -58,7 +55,6 @@ void main() {
       test(
         "should return ResultWrapper.success(false) when signIn is successful but user is null",
         () async {
-          // Arrange
           final mockUserCredential = MockUserCredential();
 
           when(
@@ -70,10 +66,8 @@ void main() {
 
           when(() => mockUserCredential.user).thenReturn(null);
 
-          // Act
           final result = await dataSource.signIn(tEmail, tPassword);
 
-          // Assert
           expect(result.isSuccess, true);
           expect(result.data, false);
         },
@@ -82,7 +76,6 @@ void main() {
       test(
         "should return ResultWrapper.error with handled error when FirebaseAuthException is thrown",
         () async {
-          // Arrange
           when(
             () => mockFirebaseAuth.signInWithEmailAndPassword(
               email: any(named: "email"),
@@ -95,10 +88,8 @@ void main() {
             ),
           );
 
-          // Act
           final result = await dataSource.signIn(tEmail, tPassword);
 
-          // Assert
           expect(result.isSuccess, false);
           expect(result.error, isNotNull);
           expect(result.error, isA<BadRequestError>());
@@ -108,7 +99,6 @@ void main() {
       test(
         "should return ResultWrapper.error with UnknownError when generic exception is thrown",
         () async {
-          // Arrange
           when(
             () => mockFirebaseAuth.signInWithEmailAndPassword(
               email: any(named: "email"),
@@ -116,10 +106,8 @@ void main() {
             ),
           ).thenThrow(Exception("Unknown error"));
 
-          // Act
           final result = await dataSource.signIn(tEmail, tPassword);
 
-          // Assert
           expect(result.isSuccess, false);
           expect(result.error, isNotNull);
           expect(result.error, isA<UnknownError>());

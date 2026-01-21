@@ -23,16 +23,13 @@ void main() {
     test(
       "should delegate to repository.signIn() and return success result",
       () async {
-        // Arrange
         final tSuccessResult = ResultWrapper.success(true);
         when(
           () => mockRepository.signIn(any(), any()),
         ).thenAnswer((_) async => tSuccessResult);
 
-        // Act
         final result = await useCase.call(tEmail, tPassword);
 
-        // Assert
         expect(result.isSuccess, true);
         expect(result.data, true);
         verify(() => mockRepository.signIn(tEmail, tPassword)).called(1);
@@ -43,7 +40,6 @@ void main() {
     test(
       "should delegate to repository.signIn() and return error result",
       () async {
-        // Arrange
         final tErrorResult = ResultWrapper<bool>.error(
           BadRequestError(message: "Invalid credentials"),
         );
@@ -51,10 +47,8 @@ void main() {
           () => mockRepository.signIn(any(), any()),
         ).thenAnswer((_) async => tErrorResult);
 
-        // Act
         final result = await useCase.call(tEmail, tPassword);
 
-        // Assert
         expect(result.isSuccess, false);
         expect(result.error, isA<BadRequestError>());
         verify(() => mockRepository.signIn(tEmail, tPassword)).called(1);
@@ -63,16 +57,13 @@ void main() {
     );
 
     test("should pass correct email and password to repository", () async {
-      // Arrange
       final tSuccessResult = ResultWrapper.success(true);
       when(
         () => mockRepository.signIn(any(), any()),
       ).thenAnswer((_) async => tSuccessResult);
 
-      // Act
       await useCase.call(tEmail, tPassword);
 
-      // Assert
       verify(() => mockRepository.signIn(tEmail, tPassword)).called(1);
     });
   });
