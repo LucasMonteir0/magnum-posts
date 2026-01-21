@@ -66,7 +66,13 @@ class HttpServiceImpl extends HttpService {
     String path, {
     Map<String, dynamic>? queryParameters,
   }) async {
-    return await _request<T>(_dio.get(path, queryParameters: queryParameters));
+    return await _request<T>(
+      _dio.get(
+        path,
+        queryParameters: queryParameters,
+        options: Options(headers: {"Accept": "application/json"}),
+      ),
+    );
   }
 
   @override

@@ -18,7 +18,7 @@ class PostsDatasourceImpl implements PostsDatasource {
   @override
   Future<ResultWrapper<List<PostEntity>>> getPosts() async {
     try {
-      final response = await _service.get("${Urls.baseUrl}/posts/");
+      final response = await _service.get("${Urls.baseUrl}/posts");
       final result = (response.data as List)
           .map((e) => PostModel.fromJson(e))
           .toList();

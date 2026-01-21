@@ -11,6 +11,9 @@ class CommonsModule extends Module {
   List<Bind> get binds => [
     Bind.instance<FirebaseAuth>(FirebaseAuth.instance, export: true),
     Bind.instance<FirebaseFirestore>(FirebaseFirestore.instance, export: true),
-    Bind.factory<HttpService>((i) => HttpServiceImpl(Dio()), export: true),
+    Bind.lazySingleton<HttpService>(
+      (i) => HttpServiceImpl(Dio()),
+      export: true,
+    ),
   ];
 }
