@@ -25,4 +25,18 @@ class AuthDataSourceImpl implements AuthDataSource {
       return ResultWrapper.error(UnknownError());
     }
   }
+
+  @override
+  Future<ResultWrapper<bool>> signOut() async {
+    try {
+      await _auth.signOut();
+
+      return ResultWrapper.success(true);
+    } on FirebaseAuthException catch (e) {
+      final error = handleFirebaseError(e);
+      return ResultWrapper.error(error);
+    } catch (e) {
+      return ResultWrapper.error(UnknownError());
+    }
+  }
 }
