@@ -1,16 +1,17 @@
 import "package:flutter_bloc/flutter_bloc.dart";
-import "../../../commons/utils/states/base_state.dart";
+
+import "../../utils/states/base_state.dart";
 import "../../core/domain/use_cases/sign_out/sign_out_use_case.dart";
 
 class SignOutBloc extends Cubit<BaseState> {
-  final SignOutUseCase useCase;
+  final SignOutUseCase _useCase;
 
-  SignOutBloc(this.useCase) : super(const InitialState());
+  SignOutBloc(this._useCase) : super(const InitialState());
 
   void call() async {
     emit(const LoadingState());
 
-    final result = await useCase.call();
+    final result = await _useCase.call();
 
     if (result.isSuccess) {
       emit(const SuccessState<bool>(true));

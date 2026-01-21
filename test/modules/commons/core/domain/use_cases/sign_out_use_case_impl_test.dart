@@ -1,18 +1,18 @@
 import "package:flutter_test/flutter_test.dart";
-import "package:magnum_posts/modules/auth/core/domain/repositories/auth_repository.dart";
-import "package:magnum_posts/modules/auth/core/domain/use_cases/sign_out/sign_out_use_case_impl.dart";
 import "package:magnum_posts/modules/commons/core/domain/entities/result_wrapper.dart";
+import "package:magnum_posts/modules/commons/core/domain/repositories/sign_out_repository.dart";
+import "package:magnum_posts/modules/commons/core/domain/use_cases/sign_out/sign_out_use_case_impl.dart";
 import "package:magnum_posts/modules/commons/utils/errors/errors.dart";
 import "package:mocktail/mocktail.dart";
 
-class MockAuthRepository extends Mock implements AuthRepository {}
+class MockSignOutRepository extends Mock implements SignOutRepository {}
 
 void main() {
   late SignOutUseCaseImpl useCase;
-  late MockAuthRepository mockRepository;
+  late MockSignOutRepository mockRepository;
 
   setUp(() {
-    mockRepository = MockAuthRepository();
+    mockRepository = MockSignOutRepository();
     useCase = SignOutUseCaseImpl(mockRepository);
   });
 

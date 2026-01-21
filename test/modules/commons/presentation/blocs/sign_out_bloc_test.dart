@@ -1,8 +1,8 @@
 import "package:bloc_test/bloc_test.dart";
 import "package:flutter_test/flutter_test.dart";
-import "package:magnum_posts/modules/auth/core/domain/use_cases/sign_out/sign_out_use_case.dart";
-import "package:magnum_posts/modules/auth/presentation/blocs/sign_out_bloc.dart";
 import "package:magnum_posts/modules/commons/core/domain/entities/result_wrapper.dart";
+import "package:magnum_posts/modules/commons/core/domain/use_cases/sign_out/sign_out_use_case.dart";
+import "package:magnum_posts/modules/commons/presentation/blocs/sign_out_bloc.dart";
 import "package:magnum_posts/modules/commons/utils/errors/errors.dart";
 import "package:magnum_posts/modules/commons/utils/states/base_state.dart";
 import "package:mocktail/mocktail.dart";

@@ -102,7 +102,7 @@ void main() {
         final error = UnknownError();
 
         expect(error.code, -1);
-        expect(error.message, "UnknownError");
+        expect(error.message, "Ocorreu um erro");
       });
     });
 

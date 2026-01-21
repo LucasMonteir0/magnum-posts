@@ -11,9 +11,4 @@ class AuthRepositoryImpl implements AuthRepository {
   Future<ResultWrapper<String>> signIn(String email, String password) {
     return dataSource.signIn(email, password);
   }
-
-  @override
-  Future<ResultWrapper<bool>> signOut() {
-    return dataSource.signOut();
-  }
 }

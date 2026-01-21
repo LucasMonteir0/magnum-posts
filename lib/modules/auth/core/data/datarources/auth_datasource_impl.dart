@@ -9,6 +9,7 @@ class AuthDataSourceImpl implements AuthDataSource {
   final FirebaseAuth _auth;
 
   AuthDataSourceImpl(this._auth);
+
   @override
   Future<ResultWrapper<String>> signIn(String email, String password) async {
     try {
@@ -18,20 +19,6 @@ class AuthDataSourceImpl implements AuthDataSource {
       );
 
       return ResultWrapper.success(result.user!.uid);
-    } on FirebaseAuthException catch (e) {
-      final error = handleFirebaseError(e);
-      return ResultWrapper.error(error);
-    } catch (e) {
-      return ResultWrapper.error(UnknownError());
-    }
-  }
-
-  @override
-  Future<ResultWrapper<bool>> signOut() async {
-    try {
-      await _auth.signOut();
-
-      return ResultWrapper.success(true);
     } on FirebaseAuthException catch (e) {
       final error = handleFirebaseError(e);
       return ResultWrapper.error(error);

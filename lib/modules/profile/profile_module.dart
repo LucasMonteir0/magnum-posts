@@ -1,5 +1,6 @@
 import "package:flutter_modular/flutter_modular.dart";
 
+import "../commons/commons_module.dart";
 import "../commons/utils/config/routes.dart";
 import "core/data/datasources/profile_datasource.dart";
 import "core/data/datasources/profile_datasource_impl.dart";
@@ -30,4 +31,7 @@ class ProfileModule extends Module {
   List<ModularRoute> get routes => [
     ChildRoute(Routes.root, child: (_, _) => const ProfileView()),
   ];
+
+  @override
+  List<Module> get imports => [CommonsModule()];
 }
