@@ -1,7 +1,7 @@
-import 'package:equatable/equatable.dart';
+import "package:equatable/equatable.dart";
 
-import '../../core/domain/entities/base_error.dart';
-import '../errors/errors.dart';
+import "../../core/domain/entities/base_error.dart";
+import "../errors/errors.dart";
 
 sealed class BaseState extends Equatable {
   const BaseState();

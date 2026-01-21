@@ -1,9 +1,9 @@
-import 'package:flutter_test/flutter_test.dart';
-import 'package:magnum_posts/modules/auth/core/data/datarources/auth_datasource.dart';
-import 'package:magnum_posts/modules/auth/core/data/repositories/auth_repository_impl.dart';
-import 'package:magnum_posts/modules/commons/core/domain/entities/result_wrapper.dart';
-import 'package:magnum_posts/modules/commons/utils/errors/errors.dart';
-import 'package:mocktail/mocktail.dart';
+import "package:flutter_test/flutter_test.dart";
+import "package:magnum_posts/modules/auth/core/data/datarources/auth_datasource.dart";
+import "package:magnum_posts/modules/auth/core/data/repositories/auth_repository_impl.dart";
+import "package:magnum_posts/modules/commons/core/domain/entities/result_wrapper.dart";
+import "package:magnum_posts/modules/commons/utils/errors/errors.dart";
+import "package:mocktail/mocktail.dart";
 
 class MockAuthDataSource extends Mock implements AuthDataSource {}
 
@@ -16,13 +16,13 @@ void main() {
     repository = AuthRepositoryImpl(mockDataSource);
   });
 
-  group('AuthRepositoryImpl', () {
-    group('signIn', () {
-      const tEmail = 'test@example.com';
-      const tPassword = 'password123';
+  group("AuthRepositoryImpl", () {
+    group("signIn", () {
+      const tEmail = "test@example.com";
+      const tPassword = "password123";
 
       test(
-        'should delegate to dataSource.signIn() and return success result',
+        "should delegate to dataSource.signIn() and return success result",
         () async {
           // Arrange
           final tSuccessResult = ResultWrapper.success(true);
@@ -42,11 +42,11 @@ void main() {
       );
 
       test(
-        'should delegate to dataSource.signIn() and return error result',
+        "should delegate to dataSource.signIn() and return error result",
         () async {
           // Arrange
           final tErrorResult = ResultWrapper<bool>.error(
-            BadRequestError(message: 'Invalid credentials'),
+            BadRequestError(message: "Invalid credentials"),
           );
           when(
             () => mockDataSource.signIn(any(), any()),
@@ -63,7 +63,7 @@ void main() {
         },
       );
 
-      test('should pass correct email and password to dataSource', () async {
+      test("should pass correct email and password to dataSource", () async {
         // Arrange
         final tSuccessResult = ResultWrapper.success(true);
         when(

@@ -1,12 +1,12 @@
-import 'package:flutter/material.dart';
+import "package:flutter/material.dart";
 
-import 'app_colors.dart';
-import 'app_sizes.dart';
-import 'app_spacing.dart';
+import "app_colors.dart";
+import "app_sizes.dart";
+import "app_spacing.dart";
 
-export 'app_colors.dart';
-export 'app_sizes.dart';
-export 'app_spacing.dart';
+export "app_colors.dart";
+export "app_sizes.dart";
+export "app_spacing.dart";
 
 class AppTheme {
   static ThemeData get lightTheme {
@@ -86,7 +86,6 @@ class AppTheme {
           borderRadius: BorderRadius.circular(AppSizes.borderRadius),
           borderSide: const BorderSide(
             color: AppColors.error,
-            width: AppSizes.borderWidth,
           ),
         ),
       ),
@@ -210,7 +209,6 @@ class AppTheme {
           borderRadius: BorderRadius.circular(AppSizes.borderRadius),
           borderSide: const BorderSide(
             color: AppColors.darkError,
-            width: AppSizes.borderWidth,
           ),
         ),
       ),

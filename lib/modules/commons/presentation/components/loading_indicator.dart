@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
+import "package:flutter/material.dart";
 
-import '../../utils/resources/theme/app_theme.dart';
+import "../../utils/resources/theme/app_theme.dart";
 
 class LoadingIndicator extends StatelessWidget {
   const LoadingIndicator({super.key});

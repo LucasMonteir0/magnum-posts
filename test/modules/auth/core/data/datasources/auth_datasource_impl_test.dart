@@ -1,8 +1,8 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_test/flutter_test.dart';
-import 'package:magnum_posts/modules/auth/core/data/datarources/auth_datasource_impl.dart';
-import 'package:magnum_posts/modules/commons/utils/errors/errors.dart';
-import 'package:mocktail/mocktail.dart';
+import "package:firebase_auth/firebase_auth.dart";
+import "package:flutter_test/flutter_test.dart";
+import "package:magnum_posts/modules/auth/core/data/datarources/auth_datasource_impl.dart";
+import "package:magnum_posts/modules/commons/utils/errors/errors.dart";
+import "package:mocktail/mocktail.dart";
 
 class MockFirebaseAuth extends Mock implements FirebaseAuth {}
 
@@ -19,13 +19,13 @@ void main() {
     dataSource = AuthDataSourceImpl(mockFirebaseAuth);
   });
 
-  group('AuthDataSourceImpl', () {
-    group('signIn', () {
-      const tEmail = 'test@example.com';
-      const tPassword = 'password123';
+  group("AuthDataSourceImpl", () {
+    group("signIn", () {
+      const tEmail = "test@example.com";
+      const tPassword = "password123";
 
       test(
-        'should return ResultWrapper.success(true) when signIn is successful and user is not null',
+        "should return ResultWrapper.success(true) when signIn is successful and user is not null",
         () async {
           // Arrange
           final mockUserCredential = MockUserCredential();
@@ -33,8 +33,8 @@ void main() {
 
           when(
             () => mockFirebaseAuth.signInWithEmailAndPassword(
-              email: any(named: 'email'),
-              password: any(named: 'password'),
+              email: any(named: "email"),
+              password: any(named: "password"),
             ),
           ).thenAnswer((_) async => mockUserCredential);
 
@@ -56,15 +56,15 @@ void main() {
       );
 
       test(
-        'should return ResultWrapper.success(false) when signIn is successful but user is null',
+        "should return ResultWrapper.success(false) when signIn is successful but user is null",
         () async {
           // Arrange
           final mockUserCredential = MockUserCredential();
 
           when(
             () => mockFirebaseAuth.signInWithEmailAndPassword(
-              email: any(named: 'email'),
-              password: any(named: 'password'),
+              email: any(named: "email"),
+              password: any(named: "password"),
             ),
           ).thenAnswer((_) async => mockUserCredential);
 
@@ -80,18 +80,18 @@ void main() {
       );
 
       test(
-        'should return ResultWrapper.error with handled error when FirebaseAuthException is thrown',
+        "should return ResultWrapper.error with handled error when FirebaseAuthException is thrown",
         () async {
           // Arrange
           when(
             () => mockFirebaseAuth.signInWithEmailAndPassword(
-              email: any(named: 'email'),
-              password: any(named: 'password'),
+              email: any(named: "email"),
+              password: any(named: "password"),
             ),
           ).thenThrow(
             FirebaseAuthException(
-              code: 'user-not-found',
-              message: 'User not found',
+              code: "user-not-found",
+              message: "User not found",
             ),
           );
 
@@ -106,15 +106,15 @@ void main() {
       );
 
       test(
-        'should return ResultWrapper.error with UnknownError when generic exception is thrown',
+        "should return ResultWrapper.error with UnknownError when generic exception is thrown",
         () async {
           // Arrange
           when(
             () => mockFirebaseAuth.signInWithEmailAndPassword(
-              email: any(named: 'email'),
-              password: any(named: 'password'),
+              email: any(named: "email"),
+              password: any(named: "password"),
             ),
-          ).thenThrow(Exception('Unknown error'));
+          ).thenThrow(Exception("Unknown error"));
 
           // Act
           final result = await dataSource.signIn(tEmail, tPassword);

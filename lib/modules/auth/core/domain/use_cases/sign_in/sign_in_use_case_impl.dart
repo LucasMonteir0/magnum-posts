@@ -1,6 +1,6 @@
-import '../../../../../commons/core/domain/entities/result_wrapper.dart';
-import '../../repositories/auth_repository.dart';
-import 'sign_in_use_case.dart';
+import "../../../../../commons/core/domain/entities/result_wrapper.dart";
+import "../../repositories/auth_repository.dart";
+import "sign_in_use_case.dart";
 
 class SignInUseCaseImpl implements SignInUseCase {
   final AuthRepository repository;

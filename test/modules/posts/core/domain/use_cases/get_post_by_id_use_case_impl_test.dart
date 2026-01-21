@@ -1,9 +1,9 @@
-import 'package:flutter_test/flutter_test.dart';
-import 'package:magnum_posts/modules/commons/core/domain/entities/result_wrapper.dart';
-import 'package:magnum_posts/modules/posts/core/data/models/post_model.dart';
-import 'package:magnum_posts/modules/posts/core/domain/repositories/posts_repository.dart';
-import 'package:magnum_posts/modules/posts/core/domain/use_cases/get_post_by_id/get_post_by_id_use_case_impl.dart';
-import 'package:mocktail/mocktail.dart';
+import "package:flutter_test/flutter_test.dart";
+import "package:magnum_posts/modules/commons/core/domain/entities/result_wrapper.dart";
+import "package:magnum_posts/modules/posts/core/data/models/post_model.dart";
+import "package:magnum_posts/modules/posts/core/domain/repositories/posts_repository.dart";
+import "package:magnum_posts/modules/posts/core/domain/use_cases/get_post_by_id/get_post_by_id_use_case_impl.dart";
+import "package:mocktail/mocktail.dart";
 
 class MockPostsRepository extends Mock implements PostsRepository {}
 
@@ -16,17 +16,17 @@ void main() {
     useCase = GetPostByIdUseCaseImpl(mockRepository);
   });
 
-  group('GetPostByIdUseCaseImpl', () {
+  group("GetPostByIdUseCaseImpl", () {
     const tPostModel = PostModel(
       id: 1,
-      title: 'Title',
-      body: 'Body',
+      title: "Title",
+      body: "Body",
       userId: 1,
     );
     final tSuccessResult = ResultWrapper.success(tPostModel);
 
     test(
-      'should delegate to repository.getPostById() with correct id',
+      "should delegate to repository.getPostById() with correct id",
       () async {
         when(
           () => mockRepository.getPostById(any()),
@@ -41,7 +41,7 @@ void main() {
       },
     );
 
-    test('should pass different ids correctly', () async {
+    test("should pass different ids correctly", () async {
       when(
         () => mockRepository.getPostById(any()),
       ).thenAnswer((_) async => tSuccessResult);

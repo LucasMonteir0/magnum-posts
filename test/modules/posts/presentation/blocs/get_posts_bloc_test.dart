@@ -1,12 +1,12 @@
-import 'package:bloc_test/bloc_test.dart';
-import 'package:flutter_test/flutter_test.dart';
-import 'package:magnum_posts/modules/commons/core/domain/entities/result_wrapper.dart';
-import 'package:magnum_posts/modules/commons/utils/errors/errors.dart';
-import 'package:magnum_posts/modules/commons/utils/states/base_state.dart';
-import 'package:magnum_posts/modules/posts/core/data/models/post_model.dart';
-import 'package:magnum_posts/modules/posts/core/domain/use_cases/get_posts/get_posts_use_case.dart';
-import 'package:magnum_posts/modules/posts/presentation/blocs/get_posts/get_posts_bloc.dart';
-import 'package:mocktail/mocktail.dart';
+import "package:bloc_test/bloc_test.dart";
+import "package:flutter_test/flutter_test.dart";
+import "package:magnum_posts/modules/commons/core/domain/entities/result_wrapper.dart";
+import "package:magnum_posts/modules/commons/utils/errors/errors.dart";
+import "package:magnum_posts/modules/commons/utils/states/base_state.dart";
+import "package:magnum_posts/modules/posts/core/data/models/post_model.dart";
+import "package:magnum_posts/modules/posts/core/domain/use_cases/get_posts/get_posts_use_case.dart";
+import "package:magnum_posts/modules/posts/presentation/blocs/get_posts/get_posts_bloc.dart";
+import "package:mocktail/mocktail.dart";
 
 class MockGetPostsUseCase extends Mock implements GetPostsUseCase {}
 
@@ -27,32 +27,32 @@ void main() {
     25,
     (i) => PostModel(
       id: i + 1,
-      title: 'Title ${i + 1}',
-      body: 'Body ${i + 1}',
+      title: "Title ${i + 1}",
+      body: "Body ${i + 1}",
       userId: i + 1,
     ),
   );
   final tSuccessResult = ResultWrapper.success(tPostsList);
   final tErrorResult = ResultWrapper<List<PostModel>>.error(
-    NotFoundError(message: 'Posts not found'),
+    NotFoundError(message: "Posts not found"),
   );
 
-  group('GetPostsBloc', () {
-    test('initial state should be InitialState', () {
+  group("GetPostsBloc", () {
+    test("initial state should be InitialState", () {
       expect(bloc.state, isA<InitialState>());
     });
 
-    test('displayedPosts should be empty initially', () {
+    test("displayedPosts should be empty initially", () {
       expect(bloc.displayedPosts, isEmpty);
     });
 
-    test('hasMore should be true initially', () {
+    test("hasMore should be true initially", () {
       expect(bloc.hasMore, true);
     });
 
-    group('loadPosts', () {
+    group("loadPosts", () {
       blocTest<GetPostsBloc, BaseState>(
-        'emits states including LoadingState and SuccessState when loadPosts succeeds',
+        "emits states including LoadingState and SuccessState when loadPosts succeeds",
         build: () {
           when(
             () => mockUseCase.call(),
@@ -68,7 +68,7 @@ void main() {
       );
 
       blocTest<GetPostsBloc, BaseState>(
-        'emits ErrorState when loadPosts fails',
+        "emits ErrorState when loadPosts fails",
         build: () {
           when(() => mockUseCase.call()).thenAnswer((_) async => tErrorResult);
           return GetPostsBloc(mockUseCase);
@@ -77,7 +77,7 @@ void main() {
         expect: () => [isA<LoadingState>(), isA<ErrorState>()],
       );
 
-      test('should load first page of posts (10 items)', () async {
+      test("should load first page of posts (10 items)", () async {
         when(() => mockUseCase.call()).thenAnswer((_) async => tSuccessResult);
 
         await bloc.loadPosts();
@@ -86,7 +86,7 @@ void main() {
         expect(bloc.hasMore, true);
       });
 
-      test('should not call useCase if posts already loaded', () async {
+      test("should not call useCase if posts already loaded", () async {
         when(() => mockUseCase.call()).thenAnswer((_) async => tSuccessResult);
 
         await bloc.loadPosts();
@@ -96,8 +96,8 @@ void main() {
       });
     });
 
-    group('loadMore', () {
-      test('hasMore property reflects pagination state', () async {
+    group("loadMore", () {
+      test("hasMore property reflects pagination state", () async {
         when(() => mockUseCase.call()).thenAnswer((_) async => tSuccessResult);
 
         await bloc.loadPosts();
@@ -107,7 +107,7 @@ void main() {
         expect(bloc.displayedPosts.length, 10);
       });
 
-      test('loadMore does nothing when already loading', () async {
+      test("loadMore does nothing when already loading", () async {
         when(() => mockUseCase.call()).thenAnswer((_) async => tSuccessResult);
 
         await bloc.loadPosts();
@@ -124,7 +124,7 @@ void main() {
         expect(bloc.displayedPosts.isNotEmpty, true);
       });
 
-      test('loadMore does not call useCase again', () async {
+      test("loadMore does not call useCase again", () async {
         when(() => mockUseCase.call()).thenAnswer((_) async => tSuccessResult);
 
         await bloc.loadPosts();
@@ -135,8 +135,8 @@ void main() {
       });
     });
 
-    group('pagination logic', () {
-      test('page size is 10 items', () async {
+    group("pagination logic", () {
+      test("page size is 10 items", () async {
         when(() => mockUseCase.call()).thenAnswer((_) async => tSuccessResult);
 
         await bloc.loadPosts();
@@ -144,7 +144,7 @@ void main() {
         expect(bloc.displayedPosts.length, 10);
       });
 
-      test('displayedPosts contains correct items after loadPosts', () async {
+      test("displayedPosts contains correct items after loadPosts", () async {
         when(() => mockUseCase.call()).thenAnswer((_) async => tSuccessResult);
 
         await bloc.loadPosts();

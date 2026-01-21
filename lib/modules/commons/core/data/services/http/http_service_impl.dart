@@ -1,9 +1,9 @@
 import "package:dio/dio.dart";
 import "package:flutter/foundation.dart";
 
-import "../../../domain/services/http/http_service.dart";
 import "../../../domain/entities/api/api_error.dart";
 import "../../../domain/entities/api/api_response.dart";
+import "../../../domain/services/http/http_service.dart";
 
 class HttpServiceImpl extends HttpService {
   final Dio _dio;

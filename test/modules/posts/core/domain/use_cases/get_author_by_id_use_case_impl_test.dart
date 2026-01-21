@@ -1,9 +1,9 @@
-import 'package:flutter_test/flutter_test.dart';
-import 'package:magnum_posts/modules/commons/core/domain/entities/result_wrapper.dart';
-import 'package:magnum_posts/modules/posts/core/data/models/author_model.dart';
-import 'package:magnum_posts/modules/posts/core/domain/repositories/posts_repository.dart';
-import 'package:magnum_posts/modules/posts/core/domain/use_cases/get_author_by_id/get_author_by_id_use_case_impl.dart';
-import 'package:mocktail/mocktail.dart';
+import "package:flutter_test/flutter_test.dart";
+import "package:magnum_posts/modules/commons/core/domain/entities/result_wrapper.dart";
+import "package:magnum_posts/modules/posts/core/data/models/author_model.dart";
+import "package:magnum_posts/modules/posts/core/domain/repositories/posts_repository.dart";
+import "package:magnum_posts/modules/posts/core/domain/use_cases/get_author_by_id/get_author_by_id_use_case_impl.dart";
+import "package:mocktail/mocktail.dart";
 
 class MockPostsRepository extends Mock implements PostsRepository {}
 
@@ -16,12 +16,12 @@ void main() {
     useCase = GetAuthorByIdUseCaseImpl(mockRepository);
   });
 
-  group('GetAuthorByIdUseCaseImpl', () {
-    const tAuthorModel = AuthorModel(id: 1, name: 'John Doe');
+  group("GetAuthorByIdUseCaseImpl", () {
+    const tAuthorModel = AuthorModel(id: 1, name: "John Doe");
     final tSuccessResult = ResultWrapper.success(tAuthorModel);
 
     test(
-      'should delegate to repository.getAuthorById() with correct id',
+      "should delegate to repository.getAuthorById() with correct id",
       () async {
         when(
           () => mockRepository.getAuthorById(any()),
@@ -36,7 +36,7 @@ void main() {
       },
     );
 
-    test('should pass different ids correctly', () async {
+    test("should pass different ids correctly", () async {
       when(
         () => mockRepository.getAuthorById(any()),
       ).thenAnswer((_) async => tSuccessResult);

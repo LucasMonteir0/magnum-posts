@@ -1,15 +1,14 @@
-import 'package:magnum_posts/modules/commons/config/urls.dart';
-import 'package:magnum_posts/modules/commons/core/domain/services/http/http_service.dart';
-
-import '../../../../commons/core/domain/entities/api/api_error.dart';
-import '../../../../commons/core/domain/entities/result_wrapper.dart';
-import '../../../../commons/utils/errors/errors.dart';
-import '../../../../commons/utils/errors/handle_errors.dart';
-import '../../domain/entities/author_entity.dart';
-import '../../domain/entities/post_entity.dart';
-import '../models/author_model.dart';
-import '../models/post_model.dart';
-import 'posts_datasource.dart';
+import "../../../../commons/config/urls.dart";
+import "../../../../commons/core/domain/entities/api/api_error.dart";
+import "../../../../commons/core/domain/entities/result_wrapper.dart";
+import "../../../../commons/core/domain/services/http/http_service.dart";
+import "../../../../commons/utils/errors/errors.dart";
+import "../../../../commons/utils/errors/handle_errors.dart";
+import "../../domain/entities/author_entity.dart";
+import "../../domain/entities/post_entity.dart";
+import "../models/author_model.dart";
+import "../models/post_model.dart";
+import "posts_datasource.dart";
 
 class PostsDatasourceImpl implements PostsDatasource {
   final HttpService _service;

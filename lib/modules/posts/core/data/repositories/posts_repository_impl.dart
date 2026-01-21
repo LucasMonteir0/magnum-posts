@@ -1,8 +1,8 @@
-import '../../../../commons/core/domain/entities/result_wrapper.dart';
-import '../../domain/entities/author_entity.dart';
-import '../../domain/entities/post_entity.dart';
-import '../../domain/repositories/posts_repository.dart';
-import '../datasources/posts_datasource.dart';
+import "../../../../commons/core/domain/entities/result_wrapper.dart";
+import "../../domain/entities/author_entity.dart";
+import "../../domain/entities/post_entity.dart";
+import "../../domain/repositories/posts_repository.dart";
+import "../datasources/posts_datasource.dart";
 
 class PostsRepositoryImpl implements PostsRepository {
   final PostsDatasource _datasource;

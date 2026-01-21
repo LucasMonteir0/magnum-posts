@@ -1,10 +1,10 @@
-import 'package:flutter_test/flutter_test.dart';
-import 'package:magnum_posts/modules/commons/core/domain/entities/result_wrapper.dart';
-import 'package:magnum_posts/modules/posts/core/data/datasources/posts_datasource.dart';
-import 'package:magnum_posts/modules/posts/core/data/models/author_model.dart';
-import 'package:magnum_posts/modules/posts/core/data/models/post_model.dart';
-import 'package:magnum_posts/modules/posts/core/data/repositories/posts_repository_impl.dart';
-import 'package:mocktail/mocktail.dart';
+import "package:flutter_test/flutter_test.dart";
+import "package:magnum_posts/modules/commons/core/domain/entities/result_wrapper.dart";
+import "package:magnum_posts/modules/posts/core/data/datasources/posts_datasource.dart";
+import "package:magnum_posts/modules/posts/core/data/models/author_model.dart";
+import "package:magnum_posts/modules/posts/core/data/models/post_model.dart";
+import "package:magnum_posts/modules/posts/core/data/repositories/posts_repository_impl.dart";
+import "package:mocktail/mocktail.dart";
 
 class MockPostsDatasource extends Mock implements PostsDatasource {}
 
@@ -17,15 +17,15 @@ void main() {
     repository = PostsRepositoryImpl(mockDatasource);
   });
 
-  group('PostsRepositoryImpl', () {
-    group('getPosts', () {
+  group("PostsRepositoryImpl", () {
+    group("getPosts", () {
       final tPostsList = [
-        const PostModel(id: 1, title: 'Title 1', body: 'Body 1', userId: 1),
-        const PostModel(id: 2, title: 'Title 2', body: 'Body 2', userId: 2),
+        const PostModel(id: 1, title: "Title 1", body: "Body 1", userId: 1),
+        const PostModel(id: 2, title: "Title 2", body: "Body 2", userId: 2),
       ];
       final tSuccessResult = ResultWrapper.success(tPostsList);
 
-      test('should delegate to datasource.getPosts()', () async {
+      test("should delegate to datasource.getPosts()", () async {
         when(
           () => mockDatasource.getPosts(),
         ).thenAnswer((_) async => tSuccessResult);
@@ -38,16 +38,16 @@ void main() {
       });
     });
 
-    group('getPostById', () {
+    group("getPostById", () {
       const tPostModel = PostModel(
         id: 1,
-        title: 'Title',
-        body: 'Body',
+        title: "Title",
+        body: "Body",
         userId: 1,
       );
       final tSuccessResult = ResultWrapper.success(tPostModel);
 
-      test('should delegate to datasource.getPostById()', () async {
+      test("should delegate to datasource.getPostById()", () async {
         when(
           () => mockDatasource.getPostById(any()),
         ).thenAnswer((_) async => tSuccessResult);
@@ -60,11 +60,11 @@ void main() {
       });
     });
 
-    group('getAuthorById', () {
-      const tAuthorModel = AuthorModel(id: 1, name: 'John Doe');
+    group("getAuthorById", () {
+      const tAuthorModel = AuthorModel(id: 1, name: "John Doe");
       final tSuccessResult = ResultWrapper.success(tAuthorModel);
 
-      test('should delegate to datasource.getAuthorById()', () async {
+      test("should delegate to datasource.getAuthorById()", () async {
         when(
           () => mockDatasource.getAuthorById(any()),
         ).thenAnswer((_) async => tSuccessResult);

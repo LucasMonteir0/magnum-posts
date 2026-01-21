@@ -1,14 +1,14 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
+import "package:flutter/material.dart";
+import "package:flutter_animate/flutter_animate.dart";
 
-import '../../../commons/utils/resources/theme/app_theme.dart';
-import '../../core/domain/entities/post_entity.dart';
+import "../../../commons/utils/resources/theme/app_theme.dart";
+import "../../core/domain/entities/post_entity.dart";
 
 class PostCard extends StatefulWidget {
   final PostEntity post;
   final int index;
 
-  const PostCard({super.key, required this.post, this.index = 0});
+  const PostCard({required this.post, super.key, this.index = 0});
 
   @override
   State<PostCard> createState() => _PostCardState();
@@ -49,7 +49,7 @@ class _PostCardState extends State<PostCard> {
               builder: (context, isExpanded, _) {
                 final displayBody = isExpanded || !shouldTruncate
                     ? body
-                    : '${body.substring(0, 100)}...';
+                    : "${body.substring(0, 100)}...";
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -72,7 +72,7 @@ class _PostCardState extends State<PostCard> {
                         child: Padding(
                           padding: const EdgeInsets.only(top: AppSpacing.xs),
                           child: Text(
-                            isExpanded ? 'Ver menos' : 'Ver mais',
+                            isExpanded ? "Ver menos" : "Ver mais",
                             style: theme.textTheme.labelLarge?.copyWith(
                               color: colorScheme.primary,
                               fontWeight: FontWeight.w600,

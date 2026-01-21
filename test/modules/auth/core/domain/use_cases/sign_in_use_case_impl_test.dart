@@ -1,9 +1,9 @@
-import 'package:flutter_test/flutter_test.dart';
-import 'package:magnum_posts/modules/auth/core/domain/repositories/auth_repository.dart';
-import 'package:magnum_posts/modules/auth/core/domain/use_cases/sign_in/sign_in_use_case_impl.dart';
-import 'package:magnum_posts/modules/commons/core/domain/entities/result_wrapper.dart';
-import 'package:magnum_posts/modules/commons/utils/errors/errors.dart';
-import 'package:mocktail/mocktail.dart';
+import "package:flutter_test/flutter_test.dart";
+import "package:magnum_posts/modules/auth/core/domain/repositories/auth_repository.dart";
+import "package:magnum_posts/modules/auth/core/domain/use_cases/sign_in/sign_in_use_case_impl.dart";
+import "package:magnum_posts/modules/commons/core/domain/entities/result_wrapper.dart";
+import "package:magnum_posts/modules/commons/utils/errors/errors.dart";
+import "package:mocktail/mocktail.dart";
 
 class MockAuthRepository extends Mock implements AuthRepository {}
 
@@ -16,12 +16,12 @@ void main() {
     useCase = SignInUseCaseImpl(mockRepository);
   });
 
-  group('SignInUseCaseImpl', () {
-    const tEmail = 'test@example.com';
-    const tPassword = 'password123';
+  group("SignInUseCaseImpl", () {
+    const tEmail = "test@example.com";
+    const tPassword = "password123";
 
     test(
-      'should delegate to repository.signIn() and return success result',
+      "should delegate to repository.signIn() and return success result",
       () async {
         // Arrange
         final tSuccessResult = ResultWrapper.success(true);
@@ -41,11 +41,11 @@ void main() {
     );
 
     test(
-      'should delegate to repository.signIn() and return error result',
+      "should delegate to repository.signIn() and return error result",
       () async {
         // Arrange
         final tErrorResult = ResultWrapper<bool>.error(
-          BadRequestError(message: 'Invalid credentials'),
+          BadRequestError(message: "Invalid credentials"),
         );
         when(
           () => mockRepository.signIn(any(), any()),
@@ -62,7 +62,7 @@ void main() {
       },
     );
 
-    test('should pass correct email and password to repository', () async {
+    test("should pass correct email and password to repository", () async {
       // Arrange
       final tSuccessResult = ResultWrapper.success(true);
       when(

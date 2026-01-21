@@ -1,10 +1,10 @@
-import 'package:dio/dio.dart';
-import 'package:flutter_modular/flutter_modular.dart';
-import 'package:magnum_posts/modules/posts/posts_module.dart';
+import "package:dio/dio.dart";
+import "package:flutter_modular/flutter_modular.dart";
 
-import '../commons/config/routes.dart';
-import '../commons/core/data/services/http/http_service_impl.dart';
-import '../commons/core/domain/services/http/http_service.dart';
+import "../commons/config/routes.dart";
+import "../commons/core/data/services/http/http_service_impl.dart";
+import "../commons/core/domain/services/http/http_service.dart";
+import "../posts/posts_module.dart";
 
 class AppModule extends Module {
   @override

@@ -1,8 +1,8 @@
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:magnum_posts/modules/commons/utils/states/base_state.dart';
+import "package:flutter_bloc/flutter_bloc.dart";
+import "../../../../commons/utils/states/base_state.dart";
 
-import '../../../core/domain/entities/post_entity.dart';
-import '../../../core/domain/use_cases/get_posts/get_posts_use_case.dart';
+import "../../../core/domain/entities/post_entity.dart";
+import "../../../core/domain/use_cases/get_posts/get_posts_use_case.dart";
 
 // A API não possui paginação, então simula-se um atraso de 1.5 segundos para simular a paginação
 

@@ -1,4 +1,4 @@
-import '../../domain/entities/post_entity.dart';
+import "../../domain/entities/post_entity.dart";
 
 class PostModel extends PostEntity {
   const PostModel({
@@ -10,14 +10,14 @@ class PostModel extends PostEntity {
 
   factory PostModel.fromJson(Map<String, dynamic> json) {
     return PostModel(
-      id: json['id'],
-      title: json['title'],
-      body: json['body'],
-      userId: json['userId'],
+      id: json["id"],
+      title: json["title"],
+      body: json["body"],
+      userId: json["userId"],
     );
   }
 
   Map<String, dynamic> toJson() {
-    return {'id': id, 'title': title, 'body': body, 'userId': userId};
+    return {"id": id, "title": title, "body": body, "userId": userId};
   }
 }
