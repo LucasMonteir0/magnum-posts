@@ -69,5 +69,43 @@ void main() {
         verify(() => mockDataSource.signIn(tEmail, tPassword)).called(1);
       });
     });
+
+    group("signOut", () {
+      test(
+        "should delegate to dataSource.signOut() and return success result",
+        () async {
+          final tSuccessResult = ResultWrapper.success(true);
+          when(
+            () => mockDataSource.signOut(),
+          ).thenAnswer((_) async => tSuccessResult);
+
+          final result = await repository.signOut();
+
+          expect(result.isSuccess, true);
+          expect(result.data, true);
+          verify(() => mockDataSource.signOut()).called(1);
+          verifyNoMoreInteractions(mockDataSource);
+        },
+      );
+
+      test(
+        "should delegate to dataSource.signOut() and return error result",
+        () async {
+          final tErrorResult = ResultWrapper<bool>.error(
+            UnknownError(message: "Sign out failed"),
+          );
+          when(
+            () => mockDataSource.signOut(),
+          ).thenAnswer((_) async => tErrorResult);
+
+          final result = await repository.signOut();
+
+          expect(result.isSuccess, false);
+          expect(result.error, isA<UnknownError>());
+          verify(() => mockDataSource.signOut()).called(1);
+          verifyNoMoreInteractions(mockDataSource);
+        },
+      );
+    });
   });
 }
