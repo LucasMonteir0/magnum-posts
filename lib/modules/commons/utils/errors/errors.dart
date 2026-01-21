@@ -200,3 +200,10 @@ class NetworkAuthenticationRequiredError extends BaseError {
   @override
   List<Object?> get props => [message, code];
 }
+
+class BadGatewayError extends BaseError {
+  BadGatewayError({super.message = "BadGatewayError"}) : super(code: 502);
+
+  @override
+  List<Object?> get props => [message, code];
+}

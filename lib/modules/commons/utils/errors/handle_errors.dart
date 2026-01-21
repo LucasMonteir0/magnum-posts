@@ -1,7 +1,7 @@
 import "../../core/domain/entities/base_error.dart";
 import "errors.dart";
 
-BaseError handleError(int? statusCode, {String message = "An error occurred"}) {
+BaseError handleError(int? statusCode, {String message = "Ocorreu um erro"}) {
   final code = statusCode ?? -1;
   switch (code) {
     case 404:
