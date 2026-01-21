@@ -203,7 +203,7 @@ void main() {
     test('should use default message when not provided', () {
       final error = handleError(999);
 
-      expect(error.message, 'An error occurred');
+      expect(error.message, 'Ocorreu um erro');
     });
   });
 }

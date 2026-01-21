@@ -8,7 +8,7 @@ import "../../../commons/utils/errors/handle_errors.dart";
 
 BaseError handleFirebaseError(
   Object error, {
-  String message = "An error occurred",
+  String message = "Ocorreu um erro",
 }) {
   if (error is FirebaseException) {
     switch (error.code) {
@@ -35,7 +35,7 @@ BaseError handleFirebaseError(
       case "operation-not-allowed":
         return ForBidenError(message: message);
       default:
-        return UnknownError();
+        return UnknownError(message: message);
     }
   }
 
