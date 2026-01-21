@@ -4,7 +4,7 @@ import "package:flutter_modular/flutter_modular.dart";
 
 import "modules/app/app_module.dart";
 import "modules/app/presentation/view/app_view.dart";
-import "modules/commons/config/firebase_options.dart";
+import "modules/commons/utils/config/firebase_options.dart";
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

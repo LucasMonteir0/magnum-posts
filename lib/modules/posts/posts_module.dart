@@ -1,5 +1,6 @@
 import "package:flutter_modular/flutter_modular.dart";
 
+import "../commons/utils/config/routes.dart";
 import "core/data/datasources/posts_datasource.dart";
 import "core/data/datasources/posts_datasource_impl.dart";
 import "core/data/repositories/posts_repository_impl.dart";
@@ -33,6 +34,6 @@ class PostsModule extends Module {
 
   @override
   List<ModularRoute> get routes => [
-    ChildRoute("/", child: (_, _) => const PostsView()),
+    ChildRoute(Routes.root, child: (_, _) => const PostsView()),
   ];
 }

@@ -1,6 +1,6 @@
 import "package:flutter/material.dart";
 import "package:flutter_modular/flutter_modular.dart";
-import "../../../commons/config/routes.dart";
+import "../../../commons/utils/config/routes.dart";
 import "../../../commons/utils/resources/theme/app_theme.dart";
 
 class AppView extends StatelessWidget {
@@ -8,7 +8,7 @@ class AppView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Modular.setInitialRoute(Routes.posts);
+    Modular.setInitialRoute(Routes.posts + Routes.root);
     return MaterialApp.router(
       title: "Magnum Posts",
       debugShowCheckedModeBanner: false,
