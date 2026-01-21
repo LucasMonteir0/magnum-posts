@@ -56,10 +56,14 @@ class GetPostsBloc extends Cubit<BaseState> {
 
       // Simula um atraso de 1.5 segundos
       await Future.delayed(const Duration(milliseconds: 1500));
-      emit(SuccessState(List<PostEntity>.from(_displayedPosts)));
+      emit(
+        SuccessState<List<PostEntity>>(List<PostEntity>.from(_displayedPosts)),
+      );
     } else {
       _hasMore = false;
-      emit(SuccessState(List<PostEntity>.from(_displayedPosts)));
+      emit(
+        SuccessState<List<PostEntity>>(List<PostEntity>.from(_displayedPosts)),
+      );
     }
 
     _isLoading = false;

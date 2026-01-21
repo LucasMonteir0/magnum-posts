@@ -52,7 +52,7 @@ class _SignInViewState extends State<SignInView> {
       body: BlocConsumer<SignInBloc, BaseState>(
         bloc: _bloc,
         listener: (context, state) {
-          if (state is SuccessState) {
+          if (state is SuccessState<bool>) {
             ToastHelper.showSuccess(context, "Login realizado com sucesso");
             Modular.to.pushNamed(Routes.posts + Routes.root);
           } else if (state is ErrorState) {

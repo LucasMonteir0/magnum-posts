@@ -13,7 +13,7 @@ class SignInBloc extends Cubit<BaseState> {
     final result = await useCase(email, password);
 
     if (result.isSuccess) {
-      emit(const SuccessState(true));
+      emit(const SuccessState<bool>(true));
     } else {
       emit(ErrorState(result.error));
     }

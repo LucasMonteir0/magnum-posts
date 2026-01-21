@@ -8,8 +8,9 @@ import "../../core/domain/entities/post_entity.dart";
 class PostCard extends StatelessWidget {
   final PostEntity post;
   final int index;
+  final VoidCallback? onTap;
 
-  const PostCard({required this.post, super.key, this.index = 0});
+  const PostCard({required this.post, super.key, this.index = 0, this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -21,20 +22,23 @@ class PostCard extends StatelessWidget {
             horizontal: AppSpacing.md,
             vertical: AppSpacing.xs,
           ),
-          child: Padding(
-            padding: const EdgeInsets.all(AppSpacing.md),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  post.title,
-                  style: theme.textTheme.titleMedium?.copyWith(
-                    fontWeight: FontWeight.bold,
+          child: GestureDetector(
+            onTap: onTap,
+            child: Padding(
+              padding: const EdgeInsets.all(AppSpacing.md),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    post.title,
+                    style: theme.textTheme.titleMedium?.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                ),
-                const SizedBox(height: AppSpacing.xs),
-                ExpandableText(text: post.body),
-              ],
+                  const SizedBox(height: AppSpacing.xs),
+                  ExpandableText(text: post.body),
+                ],
+              ),
             ),
           ),
         )

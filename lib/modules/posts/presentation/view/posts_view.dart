@@ -5,6 +5,7 @@ import "package:flutter_modular/flutter_modular.dart";
 import "../../../commons/presentation/components/app_error_view.dart";
 import "../../../commons/presentation/components/custom_app_bar.dart";
 import "../../../commons/presentation/components/loading_indicator.dart";
+import "../../../commons/utils/config/routes.dart";
 import "../../../commons/utils/resources/theme/app_theme.dart";
 import "../../../commons/utils/states/base_state.dart";
 import "../blocs/get_posts/get_posts_bloc.dart";
@@ -50,6 +51,7 @@ class _PostsViewState extends State<PostsView> {
       body: BlocBuilder<GetPostsBloc, BaseState>(
         bloc: _bloc,
         builder: (context, state) {
+          ///TODO REFATORAR PARA ESTADO CUSTOMIZADO COM A PAGINAÇÃO
           if (state is LoadingState && _bloc.displayedPosts.isEmpty) {
             return const LoadingIndicator();
           }
@@ -71,7 +73,14 @@ class _PostsViewState extends State<PostsView> {
               if (index == posts.length) {
                 return const LoadingIndicator();
               }
-              return PostCard(post: posts[index], index: index);
+              final post = posts[index];
+              return PostCard(
+                post: post,
+                index: index,
+                onTap: () => Modular.to.pushNamed(
+                  "${Routes.posts}${Routes.postDetails}/${post.id}",
+                ),
+              );
             },
           );
         },

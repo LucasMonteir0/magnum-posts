@@ -11,7 +11,10 @@ import "core/domain/use_cases/get_post_by_id/get_post_by_id_use_case.dart";
 import "core/domain/use_cases/get_post_by_id/get_post_by_id_use_case_impl.dart";
 import "core/domain/use_cases/get_posts/get_posts_use_case.dart";
 import "core/domain/use_cases/get_posts/get_posts_use_case_impl.dart";
+import "presentation/blocs/get_author_by_id/get_author_by_id_bloc.dart";
+import "presentation/blocs/get_post_by_id/get_post_by_id_bloc.dart";
 import "presentation/blocs/get_posts/get_posts_bloc.dart";
+import "presentation/view/post_details_view.dart";
 import "presentation/view/posts_view.dart";
 
 class PostsModule extends Module {
@@ -30,10 +33,16 @@ class PostsModule extends Module {
 
     //Blocs
     Bind.factory<GetPostsBloc>((i) => GetPostsBloc(i())),
+    Bind.factory<GetPostByIdBloc>((i) => GetPostByIdBloc(i())),
+    Bind.factory<GetAuthorByIdBloc>((i) => GetAuthorByIdBloc(i())),
   ];
 
   @override
   List<ModularRoute> get routes => [
     ChildRoute(Routes.root, child: (_, _) => const PostsView()),
+    ChildRoute(
+      "${Routes.postDetails}/:id",
+      child: (_, args) => PostDetailsView(postId: args.params["id"]),
+    ),
   ];
 }
