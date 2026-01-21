@@ -1,4 +1,5 @@
 import "package:flutter_bloc/flutter_bloc.dart";
+import "../../../commons/utils/cache/app_cache.dart";
 import "../../../commons/utils/states/base_state.dart";
 import "../../core/domain/use_cases/sign_in/sign_in_use_case.dart";
 
@@ -13,6 +14,7 @@ class SignInBloc extends Cubit<BaseState> {
     final result = await useCase(email, password);
 
     if (result.isSuccess) {
+      await AppCache.instance.saveUserId(result.data!);
       emit(const SuccessState<bool>(true));
     } else {
       emit(ErrorState(result.error));

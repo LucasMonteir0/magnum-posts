@@ -8,7 +8,7 @@ class SignInUseCaseImpl implements SignInUseCase {
   SignInUseCaseImpl(this.repository);
 
   @override
-  Future<ResultWrapper<bool>> call(String email, String password) {
+  Future<ResultWrapper<String>> call(String email, String password) {
     return repository.signIn(email, password);
   }
 }

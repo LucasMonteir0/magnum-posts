@@ -1,9 +1,11 @@
 import "package:firebase_auth/firebase_auth.dart";
 import "package:flutter_modular/flutter_modular.dart";
 import "package:flutter_test/flutter_test.dart";
+import "package:magnum_posts/modules/commons/utils/cache/app_cache.dart";
 import "package:magnum_posts/modules/commons/utils/config/routes.dart";
 import "package:magnum_posts/modules/commons/utils/guards/auth_guard.dart";
 import "package:mocktail/mocktail.dart";
+import "package:shared_preferences/shared_preferences.dart";
 
 class MockFirebaseAuth extends Mock implements FirebaseAuth {}
 
@@ -25,7 +27,9 @@ void main() {
   late MockFirebaseAuth mockFirebaseAuth;
   late MockParallelRoute mockRoute;
 
-  setUpAll(() {
+  setUpAll(() async {
+    SharedPreferences.setMockInitialValues({});
+    await AppCache.instance.init();
     mockFirebaseAuth = MockFirebaseAuth();
     Modular.init(TestModule(mockFirebaseAuth));
   });
@@ -43,6 +47,7 @@ void main() {
 
     test("should return true when user is authenticated", () async {
       final mockUser = MockUser();
+      when(() => mockUser.uid).thenReturn("123456");
       when(() => mockFirebaseAuth.currentUser).thenReturn(mockUser);
 
       final result = await authGuard.canActivate("/test", mockRoute);

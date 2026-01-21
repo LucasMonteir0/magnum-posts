@@ -8,7 +8,7 @@ class AuthRepositoryImpl implements AuthRepository {
   AuthRepositoryImpl(this.dataSource);
 
   @override
-  Future<ResultWrapper<bool>> signIn(String email, String password) {
+  Future<ResultWrapper<String>> signIn(String email, String password) {
     return dataSource.signIn(email, password);
   }
 }

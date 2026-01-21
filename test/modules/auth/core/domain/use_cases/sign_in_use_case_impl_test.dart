@@ -20,10 +20,12 @@ void main() {
     const tEmail = "test@example.com";
     const tPassword = "password123";
 
+    const tUserId = "123456";
+
     test(
       "should delegate to repository.signIn() and return success result",
       () async {
-        final tSuccessResult = ResultWrapper.success(true);
+        final tSuccessResult = ResultWrapper.success(tUserId);
         when(
           () => mockRepository.signIn(any(), any()),
         ).thenAnswer((_) async => tSuccessResult);
@@ -31,7 +33,7 @@ void main() {
         final result = await useCase.call(tEmail, tPassword);
 
         expect(result.isSuccess, true);
-        expect(result.data, true);
+        expect(result.data, tUserId);
         verify(() => mockRepository.signIn(tEmail, tPassword)).called(1);
         verifyNoMoreInteractions(mockRepository);
       },
@@ -40,7 +42,7 @@ void main() {
     test(
       "should delegate to repository.signIn() and return error result",
       () async {
-        final tErrorResult = ResultWrapper<bool>.error(
+        final tErrorResult = ResultWrapper<String>.error(
           BadRequestError(message: "Invalid credentials"),
         );
         when(
@@ -57,7 +59,7 @@ void main() {
     );
 
     test("should pass correct email and password to repository", () async {
-      final tSuccessResult = ResultWrapper.success(true);
+      final tSuccessResult = ResultWrapper.success(tUserId);
       when(
         () => mockRepository.signIn(any(), any()),
       ).thenAnswer((_) async => tSuccessResult);

@@ -23,9 +23,10 @@ void main() {
     group("signIn", () {
       const tEmail = "test@example.com";
       const tPassword = "password123";
+      const tUserId = "123456";
 
       test(
-        "should return ResultWrapper.success(true) when signIn is successful and user is not null",
+        "should return ResultWrapper.success(userId) when signIn is successful",
         () async {
           final mockUserCredential = MockUserCredential();
           final mockUser = MockUser();
@@ -38,38 +39,18 @@ void main() {
           ).thenAnswer((_) async => mockUserCredential);
 
           when(() => mockUserCredential.user).thenReturn(mockUser);
+          when(() => mockUser.uid).thenReturn(tUserId);
 
           final result = await dataSource.signIn(tEmail, tPassword);
 
           expect(result.isSuccess, true);
-          expect(result.data, true);
+          expect(result.data, tUserId);
           verify(
             () => mockFirebaseAuth.signInWithEmailAndPassword(
               email: tEmail,
               password: tPassword,
             ),
           ).called(1);
-        },
-      );
-
-      test(
-        "should return ResultWrapper.success(false) when signIn is successful but user is null",
-        () async {
-          final mockUserCredential = MockUserCredential();
-
-          when(
-            () => mockFirebaseAuth.signInWithEmailAndPassword(
-              email: any(named: "email"),
-              password: any(named: "password"),
-            ),
-          ).thenAnswer((_) async => mockUserCredential);
-
-          when(() => mockUserCredential.user).thenReturn(null);
-
-          final result = await dataSource.signIn(tEmail, tPassword);
-
-          expect(result.isSuccess, true);
-          expect(result.data, false);
         },
       );
 

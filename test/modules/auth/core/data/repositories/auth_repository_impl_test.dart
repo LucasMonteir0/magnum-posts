@@ -20,11 +20,12 @@ void main() {
     group("signIn", () {
       const tEmail = "test@example.com";
       const tPassword = "password123";
+      const tUserId = "123456";
 
       test(
         "should delegate to dataSource.signIn() and return success result",
         () async {
-          final tSuccessResult = ResultWrapper.success(true);
+          final tSuccessResult = ResultWrapper.success(tUserId);
           when(
             () => mockDataSource.signIn(any(), any()),
           ).thenAnswer((_) async => tSuccessResult);
@@ -32,7 +33,7 @@ void main() {
           final result = await repository.signIn(tEmail, tPassword);
 
           expect(result.isSuccess, true);
-          expect(result.data, true);
+          expect(result.data, tUserId);
           verify(() => mockDataSource.signIn(tEmail, tPassword)).called(1);
           verifyNoMoreInteractions(mockDataSource);
         },
@@ -41,7 +42,7 @@ void main() {
       test(
         "should delegate to dataSource.signIn() and return error result",
         () async {
-          final tErrorResult = ResultWrapper<bool>.error(
+          final tErrorResult = ResultWrapper<String>.error(
             BadRequestError(message: "Invalid credentials"),
           );
           when(
@@ -58,7 +59,7 @@ void main() {
       );
 
       test("should pass correct email and password to dataSource", () async {
-        final tSuccessResult = ResultWrapper.success(true);
+        final tSuccessResult = ResultWrapper.success(tUserId);
         when(
           () => mockDataSource.signIn(any(), any()),
         ).thenAnswer((_) async => tSuccessResult);
