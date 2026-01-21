@@ -7,8 +7,9 @@ import "../../../commons/presentation/components/custom_app_bar.dart";
 import "../../../commons/presentation/components/loading_indicator.dart";
 import "../../../commons/utils/config/routes.dart";
 import "../../../commons/utils/resources/theme/app_theme.dart";
-import "../../../commons/utils/states/base_state.dart";
+import "../../core/domain/entities/post_entity.dart";
 import "../blocs/get_posts/get_posts_bloc.dart";
+import "../blocs/get_posts/get_posts_state.dart";
 import "../components/post_card.dart";
 
 class PostsView extends StatefulWidget {
@@ -48,43 +49,74 @@ class _PostsViewState extends State<PostsView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const CustomAppBar(title: "Posts"),
-      body: BlocBuilder<GetPostsBloc, BaseState>(
+      body: BlocBuilder<GetPostsBloc, GetPostsState>(
         bloc: _bloc,
         builder: (context, state) {
-          ///TODO REFATORAR PARA ESTADO CUSTOMIZADO COM A PAGINAÇÃO
-          if (state is LoadingState && _bloc.displayedPosts.isEmpty) {
-            return const LoadingIndicator();
-          }
-
-          if (state is ErrorState && _bloc.displayedPosts.isEmpty) {
-            return AppErrorView(
-              message: state.error.message,
-              onRetry: () => _bloc.loadPosts(),
-            );
-          }
-
-          final posts = _bloc.displayedPosts;
-
-          return ListView.builder(
-            controller: _scrollController,
-            padding: const EdgeInsets.symmetric(vertical: AppSpacing.xs),
-            itemCount: posts.length + (_bloc.hasMore ? 1 : 0),
-            itemBuilder: (context, index) {
-              if (index == posts.length) {
-                return const LoadingIndicator();
-              }
-              final post = posts[index];
-              return PostCard(
-                post: post,
-                index: index,
-                onTap: () => Modular.to.pushNamed(
-                  "${Routes.posts}${Routes.postDetails}/${post.id}",
-                ),
-              );
-            },
-          );
+          return switch (state) {
+            GetPostsInitial() => const SizedBox.shrink(),
+            GetPostsLoading(posts: final posts) when posts.isEmpty =>
+              const LoadingIndicator(),
+            GetPostsError(posts: final posts, message: final message)
+                when posts.isEmpty =>
+              AppErrorView(message: message, onRetry: () => _bloc.loadPosts()),
+            GetPostsSuccess(posts: final posts, hasMore: final hasMore) =>
+              _PostsList(
+                posts: posts,
+                hasMore: hasMore,
+                scrollController: _scrollController,
+              ),
+            GetPostsLoading(posts: final posts, hasMore: final hasMore)
+                when posts.isNotEmpty =>
+              _PostsList(
+                posts: posts,
+                hasMore: hasMore,
+                scrollController: _scrollController,
+              ),
+            GetPostsError(posts: final posts, hasMore: final hasMore)
+                when posts.isNotEmpty =>
+              _PostsList(
+                posts: posts,
+                hasMore: hasMore,
+                scrollController: _scrollController,
+              ),
+            _ => const SizedBox.shrink(),
+          };
         },
       ),
+    );
+  }
+}
+
+class _PostsList extends StatelessWidget {
+  final List<PostEntity> posts;
+  final bool hasMore;
+  final ScrollController scrollController;
+
+  const _PostsList({
+    required this.posts,
+    required this.hasMore,
+    required this.scrollController,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      controller: scrollController,
+      padding: const EdgeInsets.symmetric(vertical: AppSpacing.xs),
+      itemCount: posts.length + (hasMore ? 1 : 0),
+      itemBuilder: (context, index) {
+        if (index == posts.length) {
+          return const LoadingIndicator();
+        }
+        final post = posts[index];
+        return PostCard(
+          post: post,
+          index: index,
+          onTap: () => Modular.to.pushNamed(
+            "${Routes.posts}${Routes.postDetails}/${post.id}",
+          ),
+        );
+      },
     );
   }
 }

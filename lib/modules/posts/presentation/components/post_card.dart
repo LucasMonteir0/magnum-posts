@@ -24,6 +24,7 @@ class PostCard extends StatelessWidget {
           ),
           child: GestureDetector(
             onTap: onTap,
+            behavior: HitTestBehavior.opaque,
             child: Padding(
               padding: const EdgeInsets.all(AppSpacing.md),
               child: Column(
