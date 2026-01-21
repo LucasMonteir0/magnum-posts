@@ -12,7 +12,7 @@ class AppView extends StatelessWidget {
     return MaterialApp.router(
       title: 'Magnum Posts',
       debugShowCheckedModeBanner: false,
-      themeMode: ThemeMode.dark,
+      themeMode: ThemeMode.system,
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
       routeInformationParser: Modular.routeInformationParser,
