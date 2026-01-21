@@ -2,6 +2,7 @@ import "package:flutter/material.dart";
 import "package:flutter_bloc/flutter_bloc.dart";
 import "package:flutter_modular/flutter_modular.dart";
 
+import "../../../commons/presentation/components/app_error_view.dart";
 import "../../../commons/presentation/components/custom_app_bar.dart";
 import "../../../commons/presentation/components/loading_indicator.dart";
 import "../../../commons/utils/resources/theme/app_theme.dart";
@@ -44,9 +45,6 @@ class _PostsViewState extends State<PostsView> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
-
     return Scaffold(
       appBar: const CustomAppBar(title: "Posts"),
       body: BlocBuilder<GetPostsBloc, BaseState>(
@@ -57,32 +55,9 @@ class _PostsViewState extends State<PostsView> {
           }
 
           if (state is ErrorState && _bloc.displayedPosts.isEmpty) {
-            return Padding(
-              padding: const EdgeInsets.all(AppSpacing.lg),
-              child: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.error_outline,
-                      size: AppSizes.iconXl,
-                      color: colorScheme.error,
-                    ),
-                    const SizedBox(height: AppSpacing.md),
-                    Text(
-                      state.error.message,
-                      style: theme.textTheme.bodyLarge,
-                      textAlign: TextAlign.center,
-                    ),
-                    const SizedBox(height: AppSpacing.lg),
-                    ElevatedButton.icon(
-                      onPressed: () => _bloc.loadPosts(),
-                      icon: const Icon(Icons.refresh),
-                      label: const Text("Tentar novamente"),
-                    ),
-                  ],
-                ),
-              ),
+            return AppErrorView(
+              message: state.error.message,
+              onRetry: () => _bloc.loadPosts(),
             );
           }
 

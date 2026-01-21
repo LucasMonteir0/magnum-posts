@@ -1,7 +1,7 @@
-import "../../../../commons/config/urls.dart";
 import "../../../../commons/core/domain/entities/api/api_error.dart";
 import "../../../../commons/core/domain/entities/result_wrapper.dart";
 import "../../../../commons/core/domain/services/http/http_service.dart";
+import "../../../../commons/utils/config/urls.dart";
 import "../../../../commons/utils/errors/errors.dart";
 import "../../../../commons/utils/errors/handle_errors.dart";
 import "../../domain/entities/author_entity.dart";
@@ -28,7 +28,7 @@ class PostsDatasourceImpl implements PostsDatasource {
       final error = handleError(e.statusCode, message: e.message);
       return ResultWrapper.error(error);
     } catch (e) {
-      return ResultWrapper.error(UnknownError(message: e.toString()));
+      return ResultWrapper.error(UnknownError());
     }
   }
 
