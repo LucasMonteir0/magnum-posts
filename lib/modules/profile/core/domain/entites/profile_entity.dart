@@ -4,7 +4,8 @@ class ProfileEntity {
   final String email;
   final int age;
   final String pictureUrl;
-  final int postsCount;
+  final int postCount;
+  final List<String> interests;
 
   ProfileEntity({
     required this.id,
@@ -12,6 +13,7 @@ class ProfileEntity {
     required this.email,
     required this.age,
     required this.pictureUrl,
-    required this.postsCount,
+    required this.postCount,
+    required this.interests,
   });
 }

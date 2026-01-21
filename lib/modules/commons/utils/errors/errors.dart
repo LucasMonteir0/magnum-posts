@@ -68,7 +68,7 @@ class TooManyRequestsError extends BaseError {
 }
 
 class UnknownError extends BaseError {
-  UnknownError({super.message = "UnknownError"}) : super(code: -1);
+  UnknownError({super.message = "Ocorreu um erro"}) : super(code: -1);
 
   @override
   List<Object?> get props => [message, code];

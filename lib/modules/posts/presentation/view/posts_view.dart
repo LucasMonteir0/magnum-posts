@@ -48,7 +48,15 @@ class _PostsViewState extends State<PostsView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(title: "Posts"),
+      appBar: CustomAppBar(
+        title: "Posts",
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.person_outline_rounded),
+            onPressed: () => Modular.to.pushNamed(Routes.profile + Routes.root),
+          ),
+        ],
+      ),
       body: BlocBuilder<GetPostsBloc, GetPostsState>(
         bloc: _bloc,
         builder: (context, state) {

@@ -7,7 +7,8 @@ class ProfileModel extends ProfileEntity {
     required super.email,
     required super.age,
     required super.pictureUrl,
-    required super.postsCount,
+    required super.postCount,
+    required super.interests,
   });
 
   factory ProfileModel.fromJson(Map<String, dynamic> json) {
@@ -17,7 +18,8 @@ class ProfileModel extends ProfileEntity {
       email: json["email"],
       age: json["age"],
       pictureUrl: json["picture_url"],
-      postsCount: json["posts_count"],
+      postCount: json["post_count"],
+      interests: (json["interests"] as List<dynamic>).cast<String>(),
     );
   }
 
@@ -28,7 +30,8 @@ class ProfileModel extends ProfileEntity {
       "email": email,
       "age": age,
       "picture_url": pictureUrl,
-      "posts_count": postsCount,
+      "post_count": postCount,
+      "interests": interests,
     };
   }
 }
