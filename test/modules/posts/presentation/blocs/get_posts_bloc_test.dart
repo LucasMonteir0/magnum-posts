@@ -37,14 +37,14 @@ void main() {
     NotFoundError(message: "Posts not found"),
   );
 
-  group("GetPostsBloc", () {
-    test("initial state should be GetPostsInitial", () {
+  group("[Presentation] GetPostsBloc", () {
+    test("InitialState", () {
       expect(bloc.state, isA<GetPostsInitial>());
     });
 
     group("loadPosts", () {
       blocTest<GetPostsBloc, GetPostsState>(
-        "emits states including GetPostsLoading and GetPostsSuccess when loadPosts succeeds",
+        "Bloc Success",
         build: () {
           when(
             () => mockUseCase.call(),
@@ -53,19 +53,11 @@ void main() {
         },
         act: (bloc) => bloc.loadPosts(),
         wait: const Duration(milliseconds: 1600),
-        verify: (bloc) {
-          final state = bloc.state;
-          if (state is GetPostsSuccess) {
-            expect(state.posts.length, 10);
-            expect(state.hasMore, true);
-          } else {
-            fail("Last state should be GetPostsSuccess");
-          }
-        },
+        expect: () => [isA<GetPostsLoading>(), isA<GetPostsSuccess>()],
       );
 
       blocTest<GetPostsBloc, GetPostsState>(
-        "emits GetPostsError when loadPosts fails",
+        "Bloc Error",
         build: () {
           when(() => mockUseCase.call()).thenAnswer((_) async => tErrorResult);
           return GetPostsBloc(mockUseCase);
@@ -78,7 +70,6 @@ void main() {
         when(() => mockUseCase.call()).thenAnswer((_) async => tSuccessResult);
 
         bloc.loadPosts();
-        // Wait for async operations and delay
         await Future.delayed(const Duration(milliseconds: 2000));
 
         final state = bloc.state;
@@ -97,7 +88,6 @@ void main() {
         bloc.loadPosts();
         await Future.delayed(const Duration(milliseconds: 2000));
 
-        // After loading first page, hasMore should be true (25 posts, showing 10)
         final state = bloc.state as GetPostsSuccess;
         expect(state.hasMore, true);
         expect(state.posts.length, 10);
@@ -109,14 +99,11 @@ void main() {
         bloc.loadPosts();
         await Future.delayed(const Duration(milliseconds: 2000));
 
-        // Start loadMore
         bloc.loadMore();
-        // Try to call loadMore again immediately
         bloc.loadMore();
 
         await Future.delayed(const Duration(milliseconds: 2000));
 
-        // Should have loaded second page (20 posts)
         final state = bloc.state as GetPostsSuccess;
         expect(state.posts.length, 20);
       });
@@ -129,7 +116,6 @@ void main() {
         bloc.loadMore();
         await Future.delayed(const Duration(milliseconds: 2000));
 
-        // UseCase should only be called once (in loadPosts)
         verify(() => mockUseCase.call()).called(1);
       });
     });

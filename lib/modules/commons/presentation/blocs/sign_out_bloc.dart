@@ -1,7 +1,7 @@
 import "package:flutter_bloc/flutter_bloc.dart";
 
-import "../../utils/states/base_state.dart";
 import "../../core/domain/use_cases/sign_out/sign_out_use_case.dart";
+import "../../utils/states/base_state.dart";
 
 class SignOutBloc extends Cubit<BaseState> {
   final SignOutUseCase _useCase;

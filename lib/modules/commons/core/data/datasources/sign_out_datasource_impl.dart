@@ -1,8 +1,8 @@
 import "package:firebase_auth/firebase_auth.dart";
 
-import "../../domain/entities/result_wrapper.dart";
 import "../../../utils/errors/errors.dart";
 import "../../../utils/errors/handle_firebase_errors.dart";
+import "../../domain/entities/result_wrapper.dart";
 import "sign_out_datasource.dart";
 
 class SignOutDataSourceImpl implements SignOutDataSource {

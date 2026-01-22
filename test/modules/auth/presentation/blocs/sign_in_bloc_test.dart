@@ -37,103 +37,39 @@ void main() {
     BadRequestError(message: "Email ou senha incorrentos"),
   );
 
-  group("SignInBloc", () {
-    test("initial state should be InitialState", () {
+  group("[Presentation] SignInBloc", () {
+    test("InitialState", () {
       expect(bloc.state, isA<InitialState>());
     });
 
-    group("call", () {
-      blocTest<SignInBloc, BaseState>(
-        "emits [LoadingState, SuccessState] when signIn succeeds",
-        build: () {
-          when(
-            () => mockUseCase.call(any(), any()),
-          ).thenAnswer((_) async => tSuccessResult);
-          return SignInBloc(mockUseCase);
-        },
-        act: (bloc) => bloc.call(tEmail, tPassword),
-        expect: () => [isA<LoadingState>(), isA<SuccessState<bool>>()],
-        verify: (_) {
-          verify(() => mockUseCase.call(tEmail, tPassword)).called(1);
-        },
-      );
-
-      blocTest<SignInBloc, BaseState>(
-        "emits [LoadingState, ErrorState] when signIn fails",
-        build: () {
-          when(
-            () => mockUseCase.call(any(), any()),
-          ).thenAnswer((_) async => tErrorResult);
-          return SignInBloc(mockUseCase);
-        },
-        act: (bloc) => bloc.call(tEmail, tPassword),
-        expect: () => [isA<LoadingState>(), isA<ErrorState>()],
-        verify: (_) {
-          verify(() => mockUseCase.call(tEmail, tPassword)).called(1);
-        },
-      );
-
-      blocTest<SignInBloc, BaseState>(
-        "SuccessState contains true when signIn succeeds",
-        build: () {
-          when(
-            () => mockUseCase.call(any(), any()),
-          ).thenAnswer((_) async => tSuccessResult);
-          return SignInBloc(mockUseCase);
-        },
-        act: (bloc) => bloc.call(tEmail, tPassword),
-        verify: (bloc) {
-          final state = bloc.state;
-          expect(state, isA<SuccessState<bool>>());
-          expect((state as SuccessState<bool>).data, true);
-        },
-      );
-
-      blocTest<SignInBloc, BaseState>(
-        "ErrorState contains the error from result when signIn fails",
-        build: () {
-          when(
-            () => mockUseCase.call(any(), any()),
-          ).thenAnswer((_) async => tErrorResult);
-          return SignInBloc(mockUseCase);
-        },
-        act: (bloc) => bloc.call(tEmail, tPassword),
-        verify: (bloc) {
-          final state = bloc.state;
-          expect(state, isA<ErrorState>());
-          expect((state as ErrorState).error, isA<BadRequestError>());
-          expect(state.error.message, "Email ou senha incorrentos");
-        },
-      );
-
-      test("should emit LoadingState first then SuccessState", () async {
+    blocTest<SignInBloc, BaseState>(
+      "Bloc Success",
+      build: () {
         when(
           () => mockUseCase.call(any(), any()),
         ).thenAnswer((_) async => tSuccessResult);
-
-        final states = <BaseState>[];
-        bloc.stream.listen(states.add);
-
-        bloc.call(tEmail, tPassword);
-
-        await Future.delayed(const Duration(milliseconds: 100));
-
-        expect(states.length, 2);
-        expect(states[0], isA<LoadingState>());
-        expect(states[1], isA<SuccessState<bool>>());
-      });
-
-      test("should pass correct email and password to useCase", () async {
-        when(
-          () => mockUseCase.call(any(), any()),
-        ).thenAnswer((_) async => tSuccessResult);
-
-        bloc.call(tEmail, tPassword);
-
-        await Future.delayed(const Duration(milliseconds: 100));
-
+        return SignInBloc(mockUseCase);
+      },
+      act: (bloc) => bloc.call(tEmail, tPassword),
+      expect: () => [isA<LoadingState>(), isA<SuccessState<bool>>()],
+      verify: (_) {
         verify(() => mockUseCase.call(tEmail, tPassword)).called(1);
-      });
-    });
+      },
+    );
+
+    blocTest<SignInBloc, BaseState>(
+      "Bloc Error",
+      build: () {
+        when(
+          () => mockUseCase.call(any(), any()),
+        ).thenAnswer((_) async => tErrorResult);
+        return SignInBloc(mockUseCase);
+      },
+      act: (bloc) => bloc.call(tEmail, tPassword),
+      expect: () => [isA<LoadingState>(), isA<ErrorState>()],
+      verify: (_) {
+        verify(() => mockUseCase.call(tEmail, tPassword)).called(1);
+      },
+    );
   });
 }

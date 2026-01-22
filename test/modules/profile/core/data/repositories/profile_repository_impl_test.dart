@@ -17,7 +17,7 @@ void main() {
     repository = ProfileRepositoryImpl(mockDataSource);
   });
 
-  group("ProfileRepositoryImpl", () {
+  group("[DATA] ProfileRepository", () {
     group("getProfile", () {
       const tUserId = "user-123";
       final tProfileModel = ProfileModel(
@@ -34,46 +34,30 @@ void main() {
         NotFoundError(message: "Usuário não encontrado"),
       );
 
-      test(
-        "should delegate to dataSource.getProfile() and return success result",
-        () async {
-          when(
-            () => mockDataSource.getProfile(any()),
-          ).thenAnswer((_) async => tSuccessResult);
-
-          final result = await repository.getProfile(tUserId);
-
-          expect(result.isSuccess, true);
-          expect(result.data, tProfileModel);
-          verify(() => mockDataSource.getProfile(tUserId)).called(1);
-          verifyNoMoreInteractions(mockDataSource);
-        },
-      );
-
-      test(
-        "should delegate to dataSource.getProfile() and return error result",
-        () async {
-          when(
-            () => mockDataSource.getProfile(any()),
-          ).thenAnswer((_) async => tErrorResult);
-
-          final result = await repository.getProfile(tUserId);
-
-          expect(result.isSuccess, false);
-          expect(result.error, isA<NotFoundError>());
-          verify(() => mockDataSource.getProfile(tUserId)).called(1);
-          verifyNoMoreInteractions(mockDataSource);
-        },
-      );
-
-      test("should pass correct userId to dataSource", () async {
+      test("When Datasource Success", () async {
         when(
           () => mockDataSource.getProfile(any()),
         ).thenAnswer((_) async => tSuccessResult);
 
-        await repository.getProfile(tUserId);
+        final result = await repository.getProfile(tUserId);
 
+        expect(result.isSuccess, true);
+        expect(result.data, tProfileModel);
         verify(() => mockDataSource.getProfile(tUserId)).called(1);
+        verifyNoMoreInteractions(mockDataSource);
+      });
+
+      test("When Datasource Error", () async {
+        when(
+          () => mockDataSource.getProfile(any()),
+        ).thenAnswer((_) async => tErrorResult);
+
+        final result = await repository.getProfile(tUserId);
+
+        expect(result.isSuccess, false);
+        expect(result.error, isA<NotFoundError>());
+        verify(() => mockDataSource.getProfile(tUserId)).called(1);
+        verifyNoMoreInteractions(mockDataSource);
       });
     });
   });

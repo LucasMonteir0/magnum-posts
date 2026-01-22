@@ -17,7 +17,7 @@ void main() {
     datasource = PostsDatasourceImpl(mockHttpService);
   });
 
-  group("PostsDatasourceImpl", () {
+  group("[DATA] PostsDatasource", () {
     group("getPosts", () {
       final tPostsJsonList = [
         {"id": 1, "title": "Title 1", "body": "Body 1", "userId": 1},
@@ -25,23 +25,20 @@ void main() {
       ];
       final tApiResponse = ApiResponse(data: tPostsJsonList, statusCode: 200);
 
-      test(
-        "should return list of PostEntity when call is successful",
-        () async {
-          when(
-            () => mockHttpService.get(any()),
-          ).thenAnswer((_) async => tApiResponse);
+      test("getPosts - SUCCESS", () async {
+        when(
+          () => mockHttpService.get(any()),
+        ).thenAnswer((_) async => tApiResponse);
 
-          final result = await datasource.getPosts();
+        final result = await datasource.getPosts();
 
-          expect(result.isSuccess, true);
-          expect(result.data!.length, 2);
-          expect(result.data![0].id, 1);
-          expect(result.data![1].id, 2);
-        },
-      );
+        expect(result.isSuccess, true);
+        expect(result.data!.length, 2);
+        expect(result.data![0].id, 1);
+        expect(result.data![1].id, 2);
+      });
 
-      test("should return error when ApiError is thrown", () async {
+      test("getPosts - ERROR - From API", () async {
         when(() => mockHttpService.get(any())).thenThrow(
           ApiError(
             message: "Not Found",
@@ -57,20 +54,17 @@ void main() {
         expect(result.error!.code, 404);
       });
 
-      test(
-        "should return UnknownError when generic exception is thrown",
-        () async {
-          when(
-            () => mockHttpService.get(any()),
-          ).thenThrow(Exception("Unknown error"));
+      test("getPosts - ERROR - Unknown ", () async {
+        when(
+          () => mockHttpService.get(any()),
+        ).thenThrow(Exception("Unknown error"));
 
-          final result = await datasource.getPosts();
+        final result = await datasource.getPosts();
 
-          expect(result.isSuccess, false);
-          expect(result.error, isNotNull);
-          expect(result.error!.code, -1);
-        },
-      );
+        expect(result.isSuccess, false);
+        expect(result.error, isNotNull);
+        expect(result.error!.code, -1);
+      });
     });
 
     group("getPostById", () {
@@ -82,7 +76,7 @@ void main() {
       };
       final tApiResponse = ApiResponse(data: tPostJson, statusCode: 200);
 
-      test("should return PostEntity when call is successful", () async {
+      test("getPostById - SUCCESS", () async {
         when(
           () => mockHttpService.get(any()),
         ).thenAnswer((_) async => tApiResponse);
@@ -94,7 +88,7 @@ void main() {
         expect(result.data!.title, "Title");
       });
 
-      test("should return error when ApiError is thrown", () async {
+      test("getPostById - ERROR - From API", () async {
         when(() => mockHttpService.get(any())).thenThrow(
           ApiError(
             message: "Not Found",
@@ -114,7 +108,7 @@ void main() {
       final tAuthorJson = {"id": 1, "name": "John Doe"};
       final tApiResponse = ApiResponse(data: tAuthorJson, statusCode: 200);
 
-      test("should return AuthorEntity when call is successful", () async {
+      test("getAuthorById - SUCCESS", () async {
         when(
           () => mockHttpService.get(any()),
         ).thenAnswer((_) async => tApiResponse);
@@ -126,7 +120,7 @@ void main() {
         expect(result.data!.name, "John Doe");
       });
 
-      test("should return error when ApiError is thrown", () async {
+      test("getAuthorById - ERROR - From API", () async {
         when(() => mockHttpService.get(any())).thenThrow(
           ApiError(
             message: "Not Found",

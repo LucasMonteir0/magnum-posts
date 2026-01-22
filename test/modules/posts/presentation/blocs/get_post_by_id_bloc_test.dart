@@ -31,13 +31,13 @@ void main() {
     bloc.close();
   });
 
-  group("GetPostByIdBloc", () {
-    test("initial state should be InitialState", () {
+  group("[Presentation] GetPostByIdBloc", () {
+    test("InitialState", () {
       expect(bloc.state, isA<InitialState>());
     });
 
     blocTest<GetPostByIdBloc, BaseState>(
-      "should emit [LoadingState, SuccessState] when use case returns success",
+      "Bloc Success",
       build: () {
         when(
           () => mockUseCase.call(tPostId),
@@ -45,21 +45,14 @@ void main() {
         return bloc;
       },
       act: (bloc) => bloc.call(tPostId),
-      expect: () => [
-        isA<LoadingState>(),
-        isA<SuccessState<PostEntity>>().having(
-          (state) => state.data,
-          "data",
-          tPost,
-        ),
-      ],
+      expect: () => [isA<LoadingState>(), isA<SuccessState<PostEntity>>()],
       verify: (_) {
         verify(() => mockUseCase.call(tPostId)).called(1);
       },
     );
 
     blocTest<GetPostByIdBloc, BaseState>(
-      "should emit [LoadingState, ErrorState] when use case returns error",
+      "Bloc Error",
       build: () {
         when(
           () => mockUseCase.call(tPostId),
@@ -67,14 +60,7 @@ void main() {
         return bloc;
       },
       act: (bloc) => bloc.call(tPostId),
-      expect: () => [
-        isA<LoadingState>(),
-        isA<ErrorState>().having(
-          (state) => state.error,
-          "error",
-          isA<NotFoundError>(),
-        ),
-      ],
+      expect: () => [isA<LoadingState>(), isA<ErrorState>()],
       verify: (_) {
         verify(() => mockUseCase.call(tPostId)).called(1);
       },

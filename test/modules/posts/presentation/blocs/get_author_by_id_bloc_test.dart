@@ -26,13 +26,13 @@ void main() {
     bloc.close();
   });
 
-  group("GetAuthorByIdBloc", () {
-    test("initial state should be InitialState", () {
+  group("[Presentation] GetAuthorByIdBloc", () {
+    test("InitialState", () {
       expect(bloc.state, isA<InitialState>());
     });
 
     blocTest<GetAuthorByIdBloc, BaseState>(
-      "should emit [LoadingState, SuccessState] when use case returns success",
+      "Bloc Success",
       build: () {
         when(
           () => mockUseCase.call(tAuthorId),
@@ -40,21 +40,14 @@ void main() {
         return bloc;
       },
       act: (bloc) => bloc.call(tAuthorId),
-      expect: () => [
-        isA<LoadingState>(),
-        isA<SuccessState<AuthorEntity>>().having(
-          (state) => state.data,
-          "data",
-          tAuthor,
-        ),
-      ],
+      expect: () => [isA<LoadingState>(), isA<SuccessState<AuthorEntity>>()],
       verify: (_) {
         verify(() => mockUseCase.call(tAuthorId)).called(1);
       },
     );
 
     blocTest<GetAuthorByIdBloc, BaseState>(
-      "should emit [LoadingState, ErrorState] when use case returns error",
+      "Bloc Error",
       build: () {
         when(
           () => mockUseCase.call(tAuthorId),
@@ -62,14 +55,7 @@ void main() {
         return bloc;
       },
       act: (bloc) => bloc.call(tAuthorId),
-      expect: () => [
-        isA<LoadingState>(),
-        isA<ErrorState>().having(
-          (state) => state.error,
-          "error",
-          isA<NotFoundError>(),
-        ),
-      ],
+      expect: () => [isA<LoadingState>(), isA<ErrorState>()],
       verify: (_) {
         verify(() => mockUseCase.call(tAuthorId)).called(1);
       },

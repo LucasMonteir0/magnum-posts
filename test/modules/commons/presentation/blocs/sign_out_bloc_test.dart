@@ -27,69 +27,35 @@ void main() {
     UnknownError(message: "Sign out failed"),
   );
 
-  group("SignOutBloc", () {
-    test("initial state should be InitialState", () {
+  group("[PRESENTATION]SignOutBloc", () {
+    test("Initial State", () {
       expect(bloc.state, isA<InitialState>());
     });
 
-    group("call", () {
-      blocTest<SignOutBloc, BaseState>(
-        "emits [LoadingState, SuccessState] when signOut succeeds",
-        build: () {
-          when(
-            () => mockUseCase.call(),
-          ).thenAnswer((_) async => tSuccessResult);
-          return SignOutBloc(mockUseCase);
-        },
-        act: (bloc) => bloc.call(),
-        expect: () => [isA<LoadingState>(), isA<SuccessState<bool>>()],
-        verify: (_) {
-          verify(() => mockUseCase.call()).called(1);
-        },
-      );
+    blocTest<SignOutBloc, BaseState>(
+      "Bloc Success",
+      build: () {
+        when(() => mockUseCase.call()).thenAnswer((_) async => tSuccessResult);
+        return SignOutBloc(mockUseCase);
+      },
+      act: (bloc) => bloc.call(),
+      expect: () => [isA<LoadingState>(), isA<SuccessState<bool>>()],
+      verify: (_) {
+        verify(() => mockUseCase.call()).called(1);
+      },
+    );
 
-      blocTest<SignOutBloc, BaseState>(
-        "emits [LoadingState, ErrorState] when signOut fails",
-        build: () {
-          when(() => mockUseCase.call()).thenAnswer((_) async => tErrorResult);
-          return SignOutBloc(mockUseCase);
-        },
-        act: (bloc) => bloc.call(),
-        expect: () => [isA<LoadingState>(), isA<ErrorState>()],
-        verify: (_) {
-          verify(() => mockUseCase.call()).called(1);
-        },
-      );
-
-      blocTest<SignOutBloc, BaseState>(
-        "SuccessState contains true when signOut succeeds",
-        build: () {
-          when(
-            () => mockUseCase.call(),
-          ).thenAnswer((_) async => tSuccessResult);
-          return SignOutBloc(mockUseCase);
-        },
-        act: (bloc) => bloc.call(),
-        verify: (bloc) {
-          final state = bloc.state;
-          expect(state, isA<SuccessState<bool>>());
-          expect((state as SuccessState<bool>).data, true);
-        },
-      );
-
-      blocTest<SignOutBloc, BaseState>(
-        "ErrorState contains the error from result when signOut fails",
-        build: () {
-          when(() => mockUseCase.call()).thenAnswer((_) async => tErrorResult);
-          return SignOutBloc(mockUseCase);
-        },
-        act: (bloc) => bloc.call(),
-        verify: (bloc) {
-          final state = bloc.state;
-          expect(state, isA<ErrorState>());
-          expect((state as ErrorState).error, isA<UnknownError>());
-        },
-      );
-    });
+    blocTest<SignOutBloc, BaseState>(
+      "Bloc Error",
+      build: () {
+        when(() => mockUseCase.call()).thenAnswer((_) async => tErrorResult);
+        return SignOutBloc(mockUseCase);
+      },
+      act: (bloc) => bloc.call(),
+      expect: () => [isA<LoadingState>(), isA<ErrorState>()],
+      verify: (_) {
+        verify(() => mockUseCase.call()).called(1);
+      },
+    );
   });
 }

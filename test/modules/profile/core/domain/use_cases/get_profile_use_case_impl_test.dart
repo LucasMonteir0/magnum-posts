@@ -17,7 +17,7 @@ void main() {
     useCase = GetProfileUseCaseImpl(mockRepository);
   });
 
-  group("GetProfileUseCaseImpl", () {
+  group("[DOMAIN] GetProfileUseCase", () {
     const tUserId = "user-123";
     final tProfileModel = ProfileModel(
       id: tUserId,
@@ -33,46 +33,30 @@ void main() {
       NotFoundError(message: "Usuário não encontrado"),
     );
 
-    test(
-      "should delegate to repository.getProfile() and return success result",
-      () async {
-        when(
-          () => mockRepository.getProfile(any()),
-        ).thenAnswer((_) async => tSuccessResult);
-
-        final result = await useCase.call(tUserId);
-
-        expect(result.isSuccess, true);
-        expect(result.data, tProfileModel);
-        verify(() => mockRepository.getProfile(tUserId)).called(1);
-        verifyNoMoreInteractions(mockRepository);
-      },
-    );
-
-    test(
-      "should delegate to repository.getProfile() and return error result",
-      () async {
-        when(
-          () => mockRepository.getProfile(any()),
-        ).thenAnswer((_) async => tErrorResult);
-
-        final result = await useCase.call(tUserId);
-
-        expect(result.isSuccess, false);
-        expect(result.error, isA<NotFoundError>());
-        verify(() => mockRepository.getProfile(tUserId)).called(1);
-        verifyNoMoreInteractions(mockRepository);
-      },
-    );
-
-    test("should pass correct userId to repository", () async {
+    test("When Repository Success", () async {
       when(
         () => mockRepository.getProfile(any()),
       ).thenAnswer((_) async => tSuccessResult);
 
-      await useCase.call(tUserId);
+      final result = await useCase.call(tUserId);
 
+      expect(result.isSuccess, true);
+      expect(result.data, tProfileModel);
       verify(() => mockRepository.getProfile(tUserId)).called(1);
+      verifyNoMoreInteractions(mockRepository);
+    });
+
+    test("When Repository Error", () async {
+      when(
+        () => mockRepository.getProfile(any()),
+      ).thenAnswer((_) async => tErrorResult);
+
+      final result = await useCase.call(tUserId);
+
+      expect(result.isSuccess, false);
+      expect(result.error, isA<NotFoundError>());
+      verify(() => mockRepository.getProfile(tUserId)).called(1);
+      verifyNoMoreInteractions(mockRepository);
     });
   });
 }
