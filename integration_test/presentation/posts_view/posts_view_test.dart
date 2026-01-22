@@ -8,7 +8,6 @@ import "package:magnum_posts/modules/commons/presentation/components/loading_ind
 
 import "package:magnum_posts/modules/posts/core/data/datasources/posts_datasource.dart";
 import "package:magnum_posts/modules/posts/core/domain/entities/post_entity.dart";
-import "package:magnum_posts/modules/posts/core/domain/use_cases/get_posts/get_posts_use_case.dart";
 import "package:magnum_posts/modules/posts/posts_module.dart";
 import "package:magnum_posts/modules/posts/presentation/blocs/get_posts/get_posts_bloc.dart";
 import "package:magnum_posts/modules/posts/presentation/blocs/get_posts/get_posts_state.dart";
@@ -21,8 +20,6 @@ import "../../../test/run_test_widget.dart";
 
 class MockGetPostsBloc extends MockCubit<GetPostsState>
     implements GetPostsBloc {}
-
-class MockGetPostsUseCase extends Mock implements GetPostsUseCase {}
 
 class MockPostsDatasource extends Mock implements PostsDatasource {}
 
@@ -42,7 +39,6 @@ void main() {
       PostsModule(),
       replaceBinds: [
         Bind.instance<GetPostsBloc>(mockBloc),
-        Bind.instance<GetPostsUseCase>(MockGetPostsUseCase()),
         Bind.instance<PostsDatasource>(MockPostsDatasource()),
       ],
     );
