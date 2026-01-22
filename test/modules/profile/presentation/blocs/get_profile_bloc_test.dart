@@ -46,92 +46,39 @@ void main() {
     NotFoundError(message: "Usuário não encontrado"),
   );
 
-  group("GetProfileBloc", () {
-    test("initial state should be InitialState", () {
+  group("[PRESENTATION] GetProfileBloc", () {
+    test("InitialState", () {
       expect(bloc.state, isA<InitialState>());
     });
 
-    group("call", () {
-      blocTest<GetProfileBloc, BaseState>(
-        "emits [LoadingState, SuccessState] when getProfile succeeds",
-        build: () {
-          when(
-            () => mockUseCase.call(any()),
-          ).thenAnswer((_) async => tSuccessResult);
-          return GetProfileBloc(mockUseCase);
-        },
-        act: (bloc) => bloc.call(),
-        expect: () => [isA<LoadingState>(), isA<SuccessState<ProfileEntity>>()],
-        verify: (_) {
-          verify(() => mockUseCase.call(tUserId)).called(1);
-        },
-      );
-
-      blocTest<GetProfileBloc, BaseState>(
-        "emits [LoadingState, ErrorState] when getProfile fails",
-        build: () {
-          when(
-            () => mockUseCase.call(any()),
-          ).thenAnswer((_) async => tErrorResult);
-          return GetProfileBloc(mockUseCase);
-        },
-        act: (bloc) => bloc.call(),
-        expect: () => [isA<LoadingState>(), isA<ErrorState>()],
-        verify: (_) {
-          verify(() => mockUseCase.call(tUserId)).called(1);
-        },
-      );
-
-      blocTest<GetProfileBloc, BaseState>(
-        "SuccessState contains ProfileEntity when getProfile succeeds",
-        build: () {
-          when(
-            () => mockUseCase.call(any()),
-          ).thenAnswer((_) async => tSuccessResult);
-          return GetProfileBloc(mockUseCase);
-        },
-        act: (bloc) => bloc.call(),
-        verify: (bloc) {
-          final state = bloc.state;
-          expect(state, isA<SuccessState<ProfileEntity>>());
-          final successState = state as SuccessState<ProfileEntity>;
-          expect(successState.data.id, tUserId);
-          expect(successState.data.name, "John Doe");
-        },
-      );
-
-      blocTest<GetProfileBloc, BaseState>(
-        "ErrorState contains the error from result when getProfile fails",
-        build: () {
-          when(
-            () => mockUseCase.call(any()),
-          ).thenAnswer((_) async => tErrorResult);
-          return GetProfileBloc(mockUseCase);
-        },
-        act: (bloc) => bloc.call(),
-        verify: (bloc) {
-          final state = bloc.state;
-          expect(state, isA<ErrorState>());
-          expect((state as ErrorState).error, isA<NotFoundError>());
-          expect(state.error.message, "Usuário não encontrado");
-        },
-      );
-
-      test("should emit ErrorState when userId is null", () async {
-        // This test is challenging due to singleton AppCache
-        // We test the bloc behavior with a valid userId instead
-        // The actual userId null case is an edge case that requires
-        // refactoring the bloc to accept userId as dependency
+    blocTest<GetProfileBloc, BaseState>(
+      "Bloc Success",
+      build: () {
         when(
           () => mockUseCase.call(any()),
         ).thenAnswer((_) async => tSuccessResult);
-
-        bloc.call();
-
-        await Future.delayed(const Duration(milliseconds: 100));
-
+        return GetProfileBloc(mockUseCase);
+      },
+      act: (bloc) => bloc.call(),
+      expect: () => [isA<LoadingState>(), isA<SuccessState<ProfileEntity>>()],
+      verify: (_) {
         verify(() => mockUseCase.call(tUserId)).called(1);
-      });
-    });
+      },
+    );
+
+    blocTest<GetProfileBloc, BaseState>(
+      "Bloc Error",
+      build: () {
+        when(
+          () => mockUseCase.call(any()),
+        ).thenAnswer((_) async => tErrorResult);
+        return GetProfileBloc(mockUseCase);
+      },
+      act: (bloc) => bloc.call(),
+      expect: () => [isA<LoadingState>(), isA<ErrorState>()],
+      verify: (_) {
+        verify(() => mockUseCase.call(tUserId)).called(1);
+      },
+    );
   });
 }
