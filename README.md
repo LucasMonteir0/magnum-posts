@@ -24,7 +24,7 @@ Aplicativo Flutter para visualização e interação com posts, desenvolvido seg
 
 ### Pré-requisitos
 
-- Flutter SDK `^3.38`
+- Flutter SDK `^3.38.7`
 - Dart SDK `^3.10.7`
 - Android Studio / Xcode (para emuladores)
 - Dispositivo físico ou emulador configurado
